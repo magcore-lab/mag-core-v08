@@ -1,5 +1,4 @@
- 
-"use client";
+ "use client";
 type OrbProps = { variant?: "red" | "blue" };
 export default function Orb({ variant = "red" }: OrbProps) {
   const isBlue = variant === "blue";
