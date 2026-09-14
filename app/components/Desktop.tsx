@@ -1,8 +1,6 @@
-
 "use client";
 import { useState } from "react";
 import Window from "./Window";
-import CoreVR from "../CoreVR";
 
 export default function Desktop() {
   const [open, setOpen] = useState<string | null>(null);
@@ -19,9 +17,22 @@ export default function Desktop() {
       justifyContent: "center" 
     }}>
       
-      {/* Core en arrière-plan */}
-      <div style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%", zIndex: 0 }}>
-        <CoreVR />
+      {/* Core en arrière-plan (Image statique) */}
+      <div style={{ 
+        position: "absolute", 
+        top: "50%", 
+        left: "50%", 
+        transform: "translate(-50%, -50%)", 
+        width: "80vw", 
+        maxWidth: "600px", 
+        zIndex: 0, 
+        opacity: 0.8 
+      }}>
+        <img 
+          src="/mag-core-engine-1k.webp" 
+          alt="MAG CORE ENGINE" 
+          style={{ width: "100%", height: "auto", objectFit: "contain" }} 
+        />
       </div>
 
       {/* Interface par-dessus */}
