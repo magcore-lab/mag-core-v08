@@ -1,4 +1,3 @@
-
 "use client";
 import { useState } from "react";
 import Window from "./Window";
@@ -34,4 +33,4 @@ export default function Desktop() {
       )}
     </div>
   );
-}z
+}
