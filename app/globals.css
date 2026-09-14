@@ -4,26 +4,15 @@
 
 :root {
   --bg: #000000;
-  --fg: #ffffff;
-  --magma: #A51205;
 }
 
 * {
   box-sizing: border-box;
-  padding: 0;
-  margin: 0;
 }
 
-html,
 body {
-  max-width: 100vw;
-  overflow-x: hidden;
   background-color: var(--bg);
-  color: var(--fg);
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-}
-
-a {
-  color: inherit;
-  text-decoration: none;
+  color: #ffffff;
+  margin: 0;
+  padding: 0;
 }
