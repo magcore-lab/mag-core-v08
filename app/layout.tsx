@@ -2,24 +2,31 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "MAG CORE V08 - BLACK EDITION | FIELD_OS",
-  description: "Noyau Vantablack, 7 ondes blanches pur ultra lumineuses, noir cinéma total, occlusion propre - FIELD_OS - LAB_SYSTEM // 01 - MAG CORE LAB",
-  metadataBase: new URL("https://mag-core-v07.vercel.app"),
+  title: "MAG CORE V08 - BLACK EDITION | Noyau Vantablack",
+  description: "Noyau Vantablack, 7 ondes, Black Edition - MAG CORE V08",
+  metadataBase: new URL("https://mag-core-v08.vercel.app"),
+  verification: {
+    google: "Ey-30t14KVrfah4s5igVBx4WccjUmNcKRCSY3TW7WIQ",
+  },
   openGraph: {
     type: "website",
-    url: "https://mag-core-v07.vercel.app/",
-    title: "MAG CORE V08 - BLACK EDITION | FIELD_OS",
-    description: "Noyau Vantablack, 7 ondes blanches pur, noir cinéma total - FIELD_OS EN DIRECT",
+    url: "https://mag-core-v08.vercel.app/",
+    title: "MAG CORE V08 - BLACK EDITION | Noyau Vantablack",
+    description: "Noyau Vantablack, 7 ondes, Black Edition - MAG CORE V08",
   },
   twitter: {
     card: "summary_large_image",
-    title: "MAG CORE V08 - BLACK EDITION | FIELD_OS",
-    description: "Noyau Vantablack, 7 ondes blanches pur, noir cinéma total - FIELD_OS EN DIRECT",
+    title: "MAG CORE V08 - BLACK EDITION | Noyau Vantablack",
+    description: "Noyau Vantablack, 7 ondes, Black Edition - MAG CORE V08",
   },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="fr"><body className="bg-black text-white antialiased">{children}</body></html>
+    <html lang="fr">
+      <body className="bg-black text-white antialiased">
+        {children}
+      </body>
+    </html>
   );
 }
