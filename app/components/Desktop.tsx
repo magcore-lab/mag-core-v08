@@ -1,9 +1,11 @@
+
 "use client";
 import { useState } from "react";
 import Window from "./Window";
 
 export default function Desktop() {
   const [open, setOpen] = useState<string | null>(null);
+  const [isOn, setIsOn] = useState(false);
 
   return (
     <div style={{ 
@@ -17,27 +19,47 @@ export default function Desktop() {
       justifyContent: "center" 
     }}>
       
-      {/* Core en arrière-plan (Image statique) */}
-      <div style={{ 
-        position: "absolute", 
-        top: "50%", 
-        left: "50%", 
-        transform: "translate(-50%, -50%)", 
-        width: "80vw", 
-        maxWidth: "600px", 
-        zIndex: 0, 
-        opacity: 0.8 
-      }}>
+      {/* Core interactif */}
+      <div 
+        onClick={() => setIsOn(!isOn)}
+        style={{ 
+          position: "absolute", 
+          top: "50%", 
+          left: "50%", 
+          transform: "translate(-50%, -50%)", 
+          width: "80vw", 
+          maxWidth: "600px", 
+          zIndex: 0, 
+          cursor: "pointer",
+          transition: "all 1.5s ease-in-out"
+        }}
+      >
         <img 
-          src="/mag-core-engine-1k.webp" 
-          alt="MAG CORE ENGINE" 
-          style={{ width: "100%", height: "auto", objectFit: "contain" }} 
+          src={isOn ? "/core-on-white-pur.png" : "/mag-core-engine-1k.webp"} 
+          alt={isOn ? "CORE ON" : "CORE OFF"} 
+          style={{ 
+            width: "100%", 
+            height: "auto", 
+            objectFit: "contain",
+            filter: isOn ? "drop-shadow(0 0 120px white)" : "none",
+            transition: "filter 1.5s ease-in-out"
+          }} 
         />
+        <div style={{ 
+          textAlign: "center", 
+          fontFamily: "monospace", 
+          fontSize: 10, 
+          letterSpacing: "0.2em", 
+          color: isOn ? "#fff" : "rgba(255,255,255,0.5)", 
+          marginTop: 16 
+        }}>
+          {isOn ? "CORE ON • 7 ONDES • FIELD ACTIF" : "CORE OFF • FIELD EN VEILLE"}
+        </div>
       </div>
 
       {/* Interface par-dessus */}
-      <div style={{ zIndex: 10, display: "flex", flexDirection: "column", alignItems: "center" }}>
-        <div style={{ marginTop: 24, display: "flex", gap: 10, fontFamily: "monospace", fontSize: 10, letterSpacing: "0.2em" }}>
+      <div style={{ zIndex: 10, display: "flex", flexDirection: "column", alignItems: "center", marginTop: "50vh" }}>
+        <div style={{ display: "flex", gap: 10, fontFamily: "monospace", fontSize: 10, letterSpacing: "0.2em" }}>
           {["LAB", "PROJECTS", "DROP", "STATUS"].map((id) => (
             <button
               key={id}
