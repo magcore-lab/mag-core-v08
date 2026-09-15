@@ -1,19 +1,27 @@
 
 "use client";
-import { useState } from "react";
+import Link from "next/link";
 
-export default function Page() {
-  const [open, setOpen] = useState<string | null>(null);
+const cards = [
+  { href: "/lab", title: "LAB", desc: "Noyau Vantablack • Test des 7 ondes", tag: "V08 CORE" },
+  { href: "/drop", title: "DROP", desc: "Black Edition • Édition limitée", tag: "LIVE" },
+  { href: "/multiverse", title: "MULTIVERSE", desc: "Portails • Archives • Versions", tag: "∞" },
+];
+
+export default function Home() {
   return (
-    <div style={{ background: "#000000", minHeight: "100vh", color: "#fff", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", fontFamily: "monospace" }}>
-      <div style={{ position: "absolute", top: 20, left: 20, fontSize: 10, letterSpacing: "0.4em", opacity: 0.5 }}>MAG-CORE // V08 BLACK EDITION - READY</div>
-      <h1 style={{ fontSize: 48, fontWeight: 900 }}>MAG CORE V08</h1>
-      <div style={{ marginTop: 24, display: "flex", gap: 10 }}>
-        {["LAB", "PROJECTS", "DROP", "STATUS"].map((id) => (
-          <button key={id} onClick={() => setOpen(id)} style={{ padding: "8px 16px", background: "rgba(0,0,0,0.5)", border: "1px solid rgba(255,255,255,0.2)", color: "#fff", cursor: "pointer" }}>{id}</button>
+    <main className="min-h-screen bg-black text-white p-4 flex flex-col items-center">
+      <h1 className="text-3xl font-black tracking-tighter mt-8">MAG CORE V08</h1>
+      <p className="text-zinc-500 text-xs tracking-[0.3em] mt-2">BLACK EDITION — NOYAU VANTABLACK</p>
+      <div className="grid gap-4 w-full max-w-[420px] mt-10">
+        {cards.map(c=>(
+          <Link key={c.href} href={c.href} className="group border border-zinc-800 rounded-[24px] p-6 bg-zinc-950/50 active:scale-[0.98] transition">
+            <div className="flex justify-between"><span className="text-[10px] border border-zinc-700 rounded-full px-2 py-0.5">{c.tag}</span><span className="text-zinc-600 group-active:text-white">→</span></div>
+            <h2 className="text-2xl font-bold mt-4">{c.title}</h2>
+            <p className="text-sm text-zinc-400 mt-1">{c.desc}</p>
+          </Link>
         ))}
       </div>
-      {open && <div style={{ marginTop: 40, border: "1px solid #fff", padding: 20 }}>{open} • MAG CORE V08 BLACK EDITION • #000 VR CINEMA • PULSE • 1.5m</div>}
-    </div>
+    </main>
   );
 }
