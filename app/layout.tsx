@@ -1,30 +1,31 @@
-import type { Metadata } from "next";
-import "./globals.css";
+import type { Metadata } from 'next';
+import './globals.css';
 
 export const metadata: Metadata = {
-  title: "MAG CORE V08 - BLACK EDITION | Noyau Vantablack",
-  description: "Noyau Vantablack, 7 ondes, Black Edition - MAG CORE V08",
-  metadataBase: new URL("https://mag-core-v08.vercel.app"),
-  verification: {
-    google: "Ey-30t14KVrfah4s5igVBx4WccjUmNcKRCSY3TW7WIQ",
-  },
+  title: 'MAGMORE ENGINE — ENTER THE CORE — V10.1 FINAL — NOYAU ACTIF 100% — DIAMANT BLANC',
+  description: 'MAGMORE — Moteur d\'interpolation cinématique — Diamant blanc actif 100% — Rétro luminescence pure — 3 écrans indépendants actifs — 10 modules opérationnels — GPU accélération — ENTER THE CORE',
+  keywords: ['MAGMORE', 'ENTER THE CORE', 'MAG CORE', 'diamant blanc', 'noyau actif', 'retro luminescence'],
+  authors: [{ name: 'MAGMORE' }],
+  creator: 'MAGMORE',
   openGraph: {
-    type: "website",
-    url: "https://mag-core-v08.vercel.app/",
-    title: "MAG CORE V08 - BLACK EDITION | Noyau Vantablack",
-    description: "Noyau Vantablack, 7 ondes, Black Edition - MAG CORE V08",
+    title: 'MAGMORE — ENTER THE CORE — V10.1 FINAL',
+    description: 'Noyau énergie maîtrisé — Diamant blanc actif 100% — Rétro luminescence cinématique pure — No triangle',
+    type: 'website',
   },
-  twitter: {
-    card: "summary_large_image",
-    title: "MAG CORE V08 - BLACK EDITION | Noyau Vantablack",
-    description: "Noyau Vantablack, 7 ondes, Black Edition - MAG CORE V08",
+  robots: {
+    index: true,
+    follow: true,
   },
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <html lang="fr">
-      <body className="bg-black text-white antialiased">
+      <body style={{ margin: 0, background: '#000', overflow: 'hidden' }}>
         {children}
       </body>
     </html>
