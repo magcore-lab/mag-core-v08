@@ -1,56 +1,40 @@
- 
-@tailwind base;
+ @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-html, body {
-  background: #000;
-  margin: 0;
-  padding: 0;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-}
+html, body { background:#000; margin:0; padding:0; width:100%; height:100%; overflow:hidden; }
 
-@keyframes corePulse {
-  0% { transform: scale(1); }
-  50% { transform: scale(1.04); }
-  100% { transform: scale(1); }
-}
-
-@keyframes glowPulse {
-  0% { opacity: 0.5; }
-  50% { opacity: 1; }
-  100% { opacity: 0.5; }
-}
+@keyframes corePulse { 0%{transform:scale(1)} 50%{transform:scale(1.035)} 100%{transform:scale(1)} }
+@keyframes glowPulse { 0%{opacity:0.5} 50%{opacity:1} 100%{opacity:0.5} }
+@keyframes sparkle { 0%,100%{opacity:0.3} 50%{opacity:1} }
 
 .core-420 {
-  width: 420px;
-  height: 420px;
-  background: radial-gradient(circle at 50% 40%, #fff 0%, #fff 20%, #e0e0e0 50%, #999 80%);
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 0 80px rgba(255,255,255,0.7), 0 0 160px rgba(255,255,255,0.2);
+  width:420px; height:420px;
+  border-radius:50%;
+  position:relative;
+  display:flex; align-items:center; justify-content:center;
+  background:
+    conic-gradient(from 0deg at 50% 50%, #ffffff 0deg, #e8e8e8 25deg, #ffffff 50deg, #c8c8c8 75deg, #ffffff 100deg, #d0d0d0 125deg, #ffffff 150deg, #a8a8a8 175deg, #ffffff 200deg, #e0e0e0 225deg, #ffffff 250deg, #b8b8b8 275deg, #ffffff 300deg, #d8d8d8 325deg, #ffffff 350deg),
+    radial-gradient(circle at 35% 30%, #ffffff 0%, rgba(255,255,255,0.9) 15%, rgba(200,200,200,0.4) 40%, rgba(0,0,0,0) 70%);
+  box-shadow: 0 0 60px rgba(255,255,255,0.8), 0 0 140px rgba(255,255,255,0.3), 0 0 220px rgba(0,255,255,0.15);
   animation: corePulse 3s ease-in-out infinite;
+  overflow:hidden;
 }
 
-.tron-ring {
-  position: absolute;
-  width: 640px;
-  height: 640px;
-  border: 1px solid rgba(0,255,255,0.4);
-  border-radius: 50%;
-  box-shadow: 0 0 30px rgba(0,255,255,0.3) inset;
-  animation: glowPulse 3s ease-in-out infinite;
+.core-420::before {
+  content:'';
+  position:absolute; inset:8%;
+  border-radius:50%;
+  background: conic-gradient(from 20deg at 50% 50%, transparent 0deg, rgba(255,255,255,0.4) 15deg, transparent 30deg, rgba(0,255,255,0.15) 60deg, transparent 90deg, rgba(255,255,255,0.3) 120deg, transparent 150deg, rgba(255,255,255,0.5) 180deg, transparent 210deg, rgba(255,255,255,0.25) 240deg, transparent 270deg, rgba(255,255,255,0.4) 300deg, transparent 330deg);
+  animation: sparkle 2.5s ease-in-out infinite;
 }
 
-.tron-ring-2 {
-  position: absolute;
-  width: 520px;
-  height: 520px;
-  border: 1px solid rgba(255,255,255,0.15);
-  border-radius: 50%;
-  animation: glowPulse 3s ease-in-out infinite 0.5s;
+.core-420::after {
+  content:'';
+  position:absolute; inset:0;
+  border-radius:50%;
+  background: radial-gradient(circle at 50% 50%, transparent 58%, rgba(0,0,0,0.15) 62%, transparent 68%, rgba(255,255,255,0.1) 72%, transparent 78%);
 }
+
+.tron-ring { position:absolute; width:640px; height:640px; border:1px solid rgba(0,255,255,0.45); border-radius:50%; box-shadow:0 0 30px rgba(0,255,255,0.3) inset; animation:glowPulse 3s ease-in-out infinite; }
+.tron-ring-2 { position:absolute; width:520px; height:520px; border:1px solid rgba(255,255,255,0.15); border-radius:50%; animation:glowPulse 3s ease-in-out infinite 0.5s; }
