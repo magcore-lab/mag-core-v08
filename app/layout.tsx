@@ -2,7 +2,7 @@
 import "./globals.css";
 
 export const metadata = {
-  title: "MAGMORE ENGINE — ENTER THE CORE — V10.2 PULSATION — NOYAU ACTIF 100%",
+  title: "MAGMORE ENGINE — ENTER THE CORE — V10.2 PULSATION",
   description: "MAGMORE V10.2 PULSATION ULTRA-BRILLANT",
 };
 
@@ -12,4 +12,4 @@ export default function RootLayout({children}:{children:React.ReactNode}){
       <body>{children}</body>
     </html>
   )
-}z
+}
