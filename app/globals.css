@@ -1,13 +1,14 @@
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 html, body {
   background: #000;
-  margin:0; padding:0;
-  width:100%; height:100%;
-  overflow:hidden;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
 }
 
 @keyframes corePulse {
@@ -17,38 +18,38 @@ html, body {
 }
 
 @keyframes glowPulse {
-  0% { opacity: 0.6; }
+  0% { opacity: 0.5; }
   50% { opacity: 1; }
-  100% { opacity: 0.6; }
+  100% { opacity: 0.5; }
 }
 
 .core-420 {
-  width:420px;
-  height:420px;
+  width: 420px;
+  height: 420px;
   background: radial-gradient(circle at 50% 40%, #fff 0%, #fff 20%, #e0e0e0 50%, #999 80%);
-  border-radius:50%;
-  display:flex;
-  align-items:center;
-  justify-content:center;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   box-shadow: 0 0 80px rgba(255,255,255,0.7), 0 0 160px rgba(255,255,255,0.2);
   animation: corePulse 3s ease-in-out infinite;
 }
 
 .tron-ring {
-  position:absolute;
-  width:640px;
-  height:640px;
-  border:1px solid rgba(0,255,255,0.4);
-  border-radius:50%;
+  position: absolute;
+  width: 640px;
+  height: 640px;
+  border: 1px solid rgba(0,255,255,0.4);
+  border-radius: 50%;
   box-shadow: 0 0 30px rgba(0,255,255,0.3) inset;
   animation: glowPulse 3s ease-in-out infinite;
 }
 
 .tron-ring-2 {
-  position:absolute;
-  width:520px;
-  height:520px;
-  border:1px solid rgba(255,255,255,0.15);
-  border-radius:50%;
+  position: absolute;
+  width: 520px;
+  height: 520px;
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 50%;
   animation: glowPulse 3s ease-in-out infinite 0.5s;
 }
