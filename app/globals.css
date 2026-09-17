@@ -1,18 +1,75 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-:root {
-  --bg: #000000;
-}
+/* MAGMORE V10.1 FINAL - NOYAU ACTIF 100% - RETRO LUMINESCENCE - GPU ACCEL */
 
 * {
+  margin: 0;
+  padding: 0;
   box-sizing: border-box;
 }
 
+html {
+  background: #000;
+  overflow: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
 body {
-  background-color: var(--bg);
-  color: #ffffff;
-  margin: 0;
-  padding: 0;
+  background: #000;
+  color: #fff;
+  font-family: 'JetBrains Mono', 'SF Mono', 'Monaco', 'Consolas', monospace;
+  overflow: hidden;
+  width: 100vw;
+  height: 100vh;
+  transform: translate3d(0,0,0);
+  will-change: transform;
+  isolation: isolate;
+  contain: layout paint;
+}
+
+/* GPU LAYERS - 6 couches accélérées */
+main {
+  transform: translate3d(0,0,0);
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+  perspective: 1000px;
+  isolation: isolate;
+}
+
+/* Diamant - couche GPU dédiée */
+svg {
+  transform: translate3d(0,0,0);
+  will-change: transform, filter;
+  backface-visibility: hidden;
+}
+
+/* Retro luminescence breathing */
+@keyframes magmore-breathe {
+  0%, 100% { transform: translate(-50%, -58%) scale(1) translate3d(0,0,0); filter: brightness(1) drop-shadow(0 0 32px rgba(255,255,255,0.5)); }
+  50% { transform: translate(-50%, -58%) scale(1.05) translate3d(0,0,0); filter: brightness(1.15) drop-shadow(0 0 48px rgba(255,255,255,0.7)); }
+}
+
+@keyframes tron-glow {
+  0%, 100% { text-shadow: 0 0 12px rgba(255,255,255,0.8), 0 0 32px rgba(180,220,255,0.5), 0 0 60px rgba(255,255,255,0.25); }
+  50% { text-shadow: 0 0 20px rgba(255,255,255,1), 0 0 48px rgba(180,220,255,0.8), 0 0 80px rgba(255,255,255,0.4); }
+}
+
+@keyframes halo-pulse {
+  0%, 100% { opacity: 0.55; transform: translate(-50%,-50%) scale(1); }
+  50% { opacity: 0.75; transform: translate(-50%,-50%) scale(1.08); }
+}
+
+/* Scrollbar hide - cinema noir pur */
+::-webkit-scrollbar { display: none; }
+* { scrollbar-width: none; -ms-overflow-style: none; }
+
+/* Selection - blanc pur */
+::selection { background: rgba(255,255,255,0.2); color: #fff; }
+
+/* Focus - no outline cinema */
+*:focus { outline: none; }
+
+/* Performance */
+img, svg, div {
+  -webkit-transform: translate3d(0,0,0);
 }
