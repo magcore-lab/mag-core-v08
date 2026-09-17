@@ -1,3 +1,4 @@
+
 'use client'
 import { useState } from 'react';
 
@@ -19,10 +20,10 @@ export default function Page(){
       <h1 className="mt-12 text-[12px] tracking-[0.3em] opacity-70 text-center">MAGMORE V10.1 — NOYAU ACTIF 100%</h1>
       <div className="mt-8 flex gap-3">
         {['CORE','TRON','MAGMORE'].map(m=>(
-          <button key={m} onClick={()=>setMode(m)} className={`px-6 py-2 rounded-full text-xs border ${mode===m?'bg-white text-black':'border-white/20 text-white/60'}`}>{m}</button>
+          <button key={m} onClick={()=>setMode(m)} className={`px-6 py-2 rounded-full text-xs border ${mode===m?'bg-white text-black border-white shadow-[0_0_30px_rgba(255,255,255,0.8)]':'border-white/20 text-white/60'}`}>{m}</button>
         ))}
       </div>
-      <p className="mt-6 text-[10px] opacity-30">ENTER THE CORE — {mode} MODE</p>
+      <p className="mt-6 text-[10px] opacity-30 tracking-[0.3em]">ENTER THE CORE — {mode} MODE</p>
     </main>
   )
 }
