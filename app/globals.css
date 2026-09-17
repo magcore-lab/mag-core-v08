@@ -1,3 +1,4 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -15,10 +16,13 @@ html, body {
 .core-420 {
   width:min(420px,78vw);
   height:min(420px,78vw);
-  background: radial-gradient(circle at 50% 50%, #ffffff 0%, #e5e5e5 45%, #111 100%);
+  background: radial-gradient(circle at 50% 50%, #ffffff 0%, #f0f0f0 30%, #c8c8c8 60%, #111 100%);
   border-radius:50%;
-  box-shadow: 0 0 80px rgba(255,255,255,0.6), 0 0 160px rgba(255,255,255,0.2);
+  box-shadow: 0 0 80px rgba(255,255,255,0.6), 0 0 160px rgba(255,255,255,0.2), 0 0 240px rgba(0,255,255,0.1);
   transform: translateZ(0);
+  display:flex;
+  align-items:center;
+  justify-content:center;
 }
 
 .tron-ring {
@@ -40,8 +44,9 @@ html, body {
 }
 
 @media(min-width:768px){
- .core-420{width:420px;height:420px}
- .tron-ring{width:640px;height:640px}
- .tron-ring-2{width:520px;height:520px}
+.core-420{width:420px;height:420px}
+.tron-ring{width:640px;height:640px}
+.tron-ring-2{width:520px;height:520px}
 }
 ::-webkit-scrollbar{display:none}
+* { scrollbar-width:none; -ms-overflow-style:none; }
