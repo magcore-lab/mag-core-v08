@@ -1,6 +1,23 @@
 {
+  "version": 2,
   "framework": "nextjs",
-  "buildCommand": "next build",
-  "outputDirectory": null,
-  "installCommand": "npm install"
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        { "key": "X-MAGMORE-Version", "value": "10.1-FINAL-NOYAU-ACTIF-100" },
+        { "key": "X-MAGMORE-Signature", "value": "ENTER-THE-CORE" }
+      ]
+    }
+  ],
+  "redirects": [
+    { "source": "/multiverse", "destination": "/", "permanent": true },
+    { "source": "/multiverse/:path*", "destination": "/", "permanent": true },
+    { "source": "/universe", "destination": "/", "permanent": true },
+    { "source": "/universe/:path*", "destination": "/", "permanent": true },
+    { "source": "/lab", "destination": "/", "permanent": true },
+    { "source": "/cfs", "destination": "/", "permanent": true }
+  ],
+  "cleanUrls": true,
+  "regions": ["cdg1"]
 }

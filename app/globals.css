@@ -1,35 +1,3 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-:root { --bg:#000000; }
-
-html, body {
-  background: var(--bg);
-  margin: 0;
-  padding: 0;
-  overflow: hidden;
-  width: 100%;
-  height: 100%;
-}
-
-/* NOYAU V10.1 - DIAMANT BLANC ACTIF 100% */
-.core-420 {
-  width: min(420px, 78vw);
-  height: min(420px, 78vw);
-  transform: translateZ(0);
-  will-change: transform;
-}
-
-.tron-ring {
-  width: min(640px, 92vw);
-  height: min(640px, 92vw);
-  transform: translateZ(0);
-}
-
-@media (min-width: 768px) {
-  .core-420 { width: 420px; height: 420px; }
-  .tron-ring { width: 640px; height: 640px; }
-}
-
-::-webkit-scrollbar { display: none; }

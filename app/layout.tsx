@@ -1,25 +1,33 @@
-import type { Metadata } from "next";
-import "./globals.css";
+import type { Metadata } from 'next';
+import './globals.css';
 
 export const metadata: Metadata = {
-  title: "MAG CORE V08 - BLACK EDITION | FIELD_OS",
-  description: "Noyau Vantablack, 7 ondes blanches pur ultra lumineuses, noir cinéma total, occlusion propre - FIELD_OS - LAB_SYSTEM // 01 - MAG CORE LAB",
-  metadataBase: new URL("https://mag-core-v07.vercel.app"),
+  title: 'MAGMORE ENGINE — ENTER THE CORE — V10.1 FINAL — NOYAU ACTIF 100% — DIAMANT BLANC',
+  description: 'MAGMORE — Moteur d\'interpolation cinématique — Diamant blanc actif 100% — Rétro luminescence pure — 3 écrans indépendants actifs — 10 modules opérationnels — GPU accélération — ENTER THE CORE',
+  keywords: ['MAGMORE', 'ENTER THE CORE', 'MAG CORE', 'diamant blanc', 'noyau actif', 'retro luminescence'],
+  authors: [{ name: 'MAGMORE' }],
+  creator: 'MAGMORE',
   openGraph: {
-    type: "website",
-    url: "https://mag-core-v07.vercel.app/",
-    title: "MAG CORE V08 - BLACK EDITION | FIELD_OS",
-    description: "Noyau Vantablack, 7 ondes blanches pur, noir cinéma total - FIELD_OS EN DIRECT",
+    title: 'MAGMORE — ENTER THE CORE — V10.1 FINAL',
+    description: 'Noyau énergie maîtrisé — Diamant blanc actif 100% — Rétro luminescence cinématique pure — No triangle',
+    type: 'website',
   },
-  twitter: {
-    card: "summary_large_image",
-    title: "MAG CORE V08 - BLACK EDITION | FIELD_OS",
-    description: "Noyau Vantablack, 7 ondes blanches pur, noir cinéma total - FIELD_OS EN DIRECT",
+  robots: {
+    index: true,
+    follow: true,
   },
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
-    <html lang="fr"><body className="bg-black text-white antialiased">{children}</body></html>
+    <html lang="fr">
+      <body style={{ margin: 0, background: '#000', overflow: 'hidden' }}>
+        {children}
+      </body>
+    </html>
   );
 }
