@@ -6,12 +6,13 @@ export default function Page(){
   const [mode,setMode] = useState('MAGCORE');
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const mouse = useRef({x:0.5,y:0.5});
-  const facets = useRef<{a:number,l:number}[]>([]);
+  const facets = useRef<{a:number,l:number,color:string}[]>([]);
 
   useEffect(()=>{
-    facets.current = Array.from({length:120},(_,i)=>({
-      a:(i/120)*Math.PI*2,
-      l:0.25+Math.random()*0.75
+    facets.current = Array.from({length:140},(_,i)=>({
+      a:(i/140)*Math.PI*2,
+      l:0.3+Math.random()*0.7,
+      color: i%3===0?'cyan':i%3===1?'white':'light'
     }));
   },[]);
 
@@ -35,57 +36,79 @@ export default function Page(){
       const w = rect.width, h = rect.height;
       const cx = w/2, cy = h/2;
       const radius = Math.min(w,h)*0.42;
-
       ctx.clearRect(0,0,w,h);
 
-      // Halo
-      const halo = ctx.createRadialGradient(cx,cy,radius*0.8,cx,cy,radius*1.6);
-      halo.addColorStop(0,'rgba(0,255,255,0.3)');
+      // Halo externe
+      const halo = ctx.createRadialGradient(cx,cy,radius*0.9,cx,cy,radius*1.8);
+      halo.addColorStop(0, mode==='PUR'?'rgba(255,255,255,0.4)':'rgba(0,255,255,0.35)');
       halo.addColorStop(1,'transparent');
       ctx.fillStyle = halo;
-      ctx.beginPath(); ctx.arc(cx,cy,radius*1.6,0,Math.PI*2); ctx.fill();
+      ctx.beginPath(); ctx.arc(cx,cy,radius*1.8,0,Math.PI*2); ctx.fill();
 
-      // Diamant
+      // Corps diamant
       ctx.save();
       ctx.beginPath(); ctx.arc(cx,cy,radius,0,Math.PI*2); ctx.clip();
-      const g = ctx.createRadialGradient(cx-radius*0.3,cy-radius*0.3,radius*0.1,cx,cy,radius);
+      const g = ctx.createRadialGradient(cx-radius*0.35,cy-radius*0.35,radius*0.15,cx,cy,radius);
       g.addColorStop(0,'#ffffff');
-      g.addColorStop(0.4,'#d8ffff');
-      g.addColorStop(1,'#ffffff');
+      g.addColorStop(0.15,'#eaffff');
+      g.addColorStop(0.45,'#8ef6ff');
+      g.addColorStop(0.85,'#ffffff');
+      g.addColorStop(1,'#b8ffff');
       ctx.fillStyle = g;
       ctx.fillRect(cx-radius,cy-radius,radius*2,radius*2);
 
-      const time = t*0.0004;
-      const mx = (mouse.current.x-0.5)*0.4;
-      const my = (mouse.current.y-0.5)*0.4;
+      const time = t*0.00035;
+      const mx = (mouse.current.x-0.5)*0.5;
+      const my = (mouse.current.y-0.5)*0.5;
 
+      // Facettes visibles
       facets.current.forEach(f=>{
-        const ang = f.a + time + mx;
-        const len = radius * f.l;
+        const ang = f.a + time + mx*1.5;
+        const len = radius * f.l * (mode==='PUR'?1.1:mode==='CŒUR'?0.7:0.9);
         ctx.beginPath();
         ctx.moveTo(cx,cy);
         ctx.lineTo(cx+Math.cos(ang)*len, cy+Math.sin(ang+my)*len);
-        ctx.strokeStyle = 'rgba(255,255,255,0.18)';
-        ctx.lineWidth = mode==='PUR'? 1.2 : mode==='CŒUR'? 0.35 : 0.7;
+        if(mode==='PUR'){
+          ctx.strokeStyle='rgba(255,255,255,0.85)';
+          ctx.lineWidth=1.4;
+          ctx.shadowColor='white'; ctx.shadowBlur=6;
+        } else if(mode==='CŒUR'){
+          ctx.strokeStyle='rgba(0,180,180,0.45)';
+          ctx.lineWidth=0.5;
+          ctx.shadowColor='cyan'; ctx.shadowBlur=2;
+        } else {
+          ctx.strokeStyle='rgba(0,220,220,0.6)';
+          ctx.lineWidth=0.9;
+          ctx.shadowColor='cyan'; ctx.shadowBlur=4;
+        }
         ctx.stroke();
+        ctx.shadowBlur=0;
       });
 
-      for(let i=0;i<24;i++){
-        const a = (i/24)*Math.PI*2 + time*1.5;
-        const rr = radius*(0.65+Math.sin(time*2+i)*0.25);
+      // Sparkles
+      for(let i=0;i<32;i++){
+        const a = (i/32)*Math.PI*2 + time*1.8;
+        const rr = radius*(0.6+Math.sin(time*2.5+i)*0.3);
         ctx.beginPath();
-        ctx.arc(cx+Math.cos(a)*rr, cy+Math.sin(a)*rr, 1.2, 0, Math.PI*2);
-        ctx.fillStyle = 'rgba(255,255,255,0.8)';
+        ctx.arc(cx+Math.cos(a)*rr, cy+Math.sin(a)*rr, mode==='PUR'?1.8:1.3, 0, Math.PI*2);
+        ctx.fillStyle = mode==='PUR'?'rgba(255,255,255,1)':'rgba(0,255,255,0.9)';
+        ctx.shadowColor = mode==='PUR'?'white':'cyan';
+        ctx.shadowBlur = 8;
         ctx.fill();
+        ctx.shadowBlur=0;
       }
 
       ctx.restore();
 
+      // Contour
       ctx.beginPath();
       ctx.arc(cx,cy,radius,0,Math.PI*2);
-      ctx.strokeStyle = 'rgba(255,255,255,0.9)';
-      ctx.lineWidth = 1.5;
+      ctx.strokeStyle = mode==='PUR'?'rgba(255,255,255,1)':'rgba(0,255,255,0.9)';
+      ctx.lineWidth = mode==='PUR'?2:1.5;
+      ctx.shadowColor = mode==='PUR'?'white':'cyan';
+      ctx.shadowBlur = 12;
       ctx.stroke();
+      ctx.shadowBlur=0;
 
       raf = requestAnimationFrame(draw);
     }
@@ -101,7 +124,7 @@ export default function Page(){
     };
 
     window.addEventListener('mousemove', move);
-    window.addEventListener('touchmove', move);
+    window.addEventListener('touchmove', move, {passive:true});
 
     return ()=>{
       cancelAnimationFrame(raf);
@@ -112,22 +135,23 @@ export default function Page(){
   },[mode]);
 
   return (
-    <main className="min-h-screen bg-black text-white flex flex-col items-center justify-center">
-      <div className="relative w-[min(360px,80vw)] h-[min(360px,80vw)]">
-        <canvas ref={canvasRef} className="absolute inset-0 w-full h-full rounded-full" />
+    <main className="min-h-screen bg-black text-white flex flex-col items-center justify-center select-none">
+      <div className="relative w-[min(380px,82vw)] h-[min(380px,82vw)]">
+        <canvas ref={canvasRef} className="absolute inset-0 w-full h-full rounded-full cursor-move" />
         <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
-          <span className="text-[10px] tracking-[0.5em] opacity-60">MAGCORE</span>
-          <span className="text-[32px] font-black drop-shadow-[0_0_20px_white]">V12.1</span>
+          <span className="text-[10px] tracking-[0.6em] opacity-50">MAGCORE</span>
+          <span className="text-[36px] font-black tracking-tight drop-shadow-[0_0_30px_rgba(0,255,255,0.8)]">V12.2</span>
+          <span className="text-[8px] tracking-[0.4em] opacity-30 mt-1">{mode}</span>
         </div>
       </div>
 
-      <div className="mt-8 flex gap-2">
+      <div className="mt-10 flex gap-3">
         {['CŒUR','PUR','MAGCORE'].map(m=>(
-          <button key={m} onClick={()=>setMode(m)} className={`px-4 py-2 rounded-full text-xs border ${mode===m?'bg-white text-black border-white shadow-[0_0_30px_white]':'border-white/20 text-white/60'}`}>{m}</button>
+          <button key={m} onClick={()=>setMode(m)} className={`px-6 py-2.5 rounded-full text-[11px] tracking-[0.2em] border transition-all ${mode===m?'bg-white text-black border-white shadow-[0_0_40px_white] scale-105':'border-white/20 text-white/50 hover:border-white/40 hover:text-white/80'}`}>{m}</button>
         ))}
       </div>
 
-      <p className="mt-4 text-[9px] opacity-30 tracking-[0.3em]">FIX GLITCH - FACETTES STABLES - {mode}</p>
+      <p className="mt-6 text-[9px] opacity-25 tracking-[0.35em]">V12.2 - FACETTES CYAN VISIBLES - {mode}</p>
     </main>
   )
 }
