@@ -1,42 +1,24 @@
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
+@tailwind base; @tailwind components; @tailwind utilities;
 html, body { background:#000; margin:0; padding:0; width:100%; height:100%; overflow:hidden; }
-
 @keyframes corePulse { 0%{transform:scale(1)} 50%{transform:scale(1.04)} 100%{transform:scale(1)} }
-@keyframes glowPulse { 0%{opacity:0.6} 50%{opacity:1} 100%{opacity:0.6} }
 @keyframes rotateSlow { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }
 @keyframes cyanFlash { 0%,100%{opacity:0.2} 25%{opacity:0.9} 50%{opacity:0.3} 75%{opacity:1} }
 
 .core-420 {
-  width: min(300px, 68vw);
-  height: min(300px, 68vw);
-  border-radius:50%;
-  position:relative;
+  width: min(300px, 68vw); height: min(300px, 68vw); border-radius:50%; position:relative;
   display:flex; align-items:center; justify-content:center;
-  background: radial-gradient(circle at 35% 30%, #fff 0%, #e0ffff 18%, rgba(0,255,255,0.2) 45%, transparent 70%),
-              radial-gradient(circle at 50% 50%, #ffffff 0%, #f0ffff 60%, #a0ffff 100%);
-  box-shadow: 0 0 60px rgba(255,255,255,0.9), 0 0 120px rgba(0,255,255,0.5), 0 0 200px rgba(0,255,255,0.25);
-  animation: corePulse 2.8s ease-in-out infinite;
-  overflow:hidden;
+  background: radial-gradient(circle at 35% 30%, #fff 0%, #e0ffff 18%, rgba(0,255,255,0.2) 45%, transparent 70%), radial-gradient(circle at 50% 50%, #ffffff 0%, #f0ffff 60%, #a0ffff 100%);
+  box-shadow: 0 0 60px rgba(255,255,255,0.9), 0 0 120px rgba(0,255,255,0.4), 0 0 200px rgba(0,255,255,0.2);
+  animation: corePulse 2.8s ease-in-out infinite; overflow:hidden;
 }
-
 .facet-spin {
-  position:absolute; inset:-25%;
-  border-radius:50%;
+  position:absolute; inset:-25%; border-radius:50%;
   background: conic-gradient(from 0deg at 50% 50%, #fff 0deg, #bff 25deg, #fff 50deg, #8ff 75deg, #fff 100deg, #aff 125deg, #fff 150deg, #0ff 175deg, #fff 200deg, #bff 225deg, #fff 250deg, #6ff 275deg, #fff 300deg, #aff 325deg, #fff 350deg);
-  mix-blend-mode: screen;
-  opacity:0.85;
-  animation: rotateSlow 18s linear infinite;
+  mix-blend-mode: screen; opacity:0.85; animation: rotateSlow 18s linear infinite;
 }
-
 .facet-sparkle {
   position:absolute; inset:6%; border-radius:50%;
   background: conic-gradient(from 0deg at 50% 50%, transparent 0deg, rgba(0,255,255,0.6) 10deg, transparent 25deg, rgba(255,255,255,0.5) 50deg, transparent 70deg, rgba(0,255,255,0.8) 95deg, transparent 110deg, rgba(0,255,255,0.5) 135deg, transparent 160deg, rgba(255,255,255,0.6) 185deg, transparent 210deg, rgba(0,255,255,0.7) 235deg, transparent 260deg, rgba(0,255,255,0.4) 285deg, transparent 310deg, rgba(255,255,255,0.4) 335deg, transparent 360deg);
-  animation: rotateSlow 9s linear infinite reverse, cyanFlash 3s ease-in-out infinite;
+  animation: rotateSlow 9s linear infinite reverse;
 }
-
-.tron-ring { position:absolute; width:min(460px,88vw); height:min(460px,88vw); border:1.5px solid rgba(0,255,255,0.75); border-radius:50%; box-shadow:0 0 40px rgba(0,255,255,0.6) inset, 0 0 60px rgba(0,255,255,0.3); animation:glowPulse 2.5s ease-in-out infinite; }
-.tron-ring-2 { position:absolute; width:min(380px,78vw); height:min(380px,78vw); border:1px solid rgba(0,255,255,0.25); border-radius:50%; animation:glowPulse 2.5s ease-in-out infinite 0.6s; }
