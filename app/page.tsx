@@ -1,27 +1,44 @@
+
 'use client'
 export default function Page(){
   return(
     <main className="min-h-screen bg-black flex items-center justify-center">
-      <div className="absolute top-6 left-6 text-[10px] tracking-[0.3em] text-white/50">
+      <div className="absolute top-6 left-6 text-[10px] tracking-[0.32em] text-white/50">
         <div className="border-l-2 border-cyan-400/60 pl-3">STATUT : ACTIF</div>
       </div>
 
-      <div className="relative w-[min(460px,84vw)] h-[min(460px,84vw)] rounded-full overflow-hidden"
+      <div className="relative w-[min(500px,86vw)] h-[min(500px,86vw)] rounded-full"
         style={{
-          background: `radial-gradient(circle at 30% 30%, #fff 0% 20%, #b8f1ff 35%, #5ad6ff 70%, #9ee9ff 100%)`,
-          boxShadow: `inset 0 0 60px rgba(255,255,255,0.9), 0 0 80px rgba(255,255,255,0.5), 0 0 140px rgba(0,220,255,0.4)`
+          background: `radial-gradient(circle at 32% 28%, #fff 0% 12%, #e6fbff 22%, #6fdfff 48%, #aef0ff 82%, #d8f9ff 100%)`,
+          boxShadow: `0 0 0 1px rgba(255,255,255,0.9), 0 0 90px rgba(255,255,255,0.65), 0 0 160px rgba(0,220,255,0.5), inset 0 0 50px rgba(255,255,255,0.95)`
         }}
       >
-        <div className="absolute inset-0 rounded-full"
-          style={{
-            background: `repeating-conic-gradient(from 0deg, transparent 0deg 5deg, rgba(255,255,255,0.85) 5deg 5.6deg, transparent 5.6deg 10deg)`,
-            mixBlendMode: 'overlay', opacity: 0.9
-          }}
-        />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[30%] h-[30%] rounded-full bg-white blur-[1px] shadow-[0_0_30px_white]" />
-        <div className="absolute inset-0 flex flex-col items-center justify-center">
-          <span className="text-[9px] tracking-[0.42em] text-cyan-900/60 font-bold">MAGMORE V10.1</span>
-          <span className="text-[10px] mt-1 tracking-[0.2em] text-cyan-900/70 font-bold">NOYAU ACTIF 100%</span>
+        {/* FACETTES SHARP CRYSTAL - 72 facettes nettes */[STRIPPED 23 bytes]"0 0 100 100" className="absolute inset-0 w-full h-full rounded-full">
+          {Array.from({length:72}).map((_,i)=>{
+            const a1=(i/72)*360;
+            const mid=a1+2.5;
+            const x1=50+Math.cos(a1*Math.PI/180)*50;
+            const y1=50+Math.sin(a1*Math.PI/180)*50;
+            const x2=50+Math.cos(mid*Math.PI/180)*22;
+            const y2=50+Math.sin(mid*Math.PI/180)*22;
+            const isBright=i%6===0;
+            return(
+              <g key={i}>
+                <path d={`M50 50 L${x1} ${y1} L${x2} ${y2} Z`}
+                  fill={isBright?'rgba(255,255,255,0.22)':'rgba(255,255,255,0.06)'}
+                  stroke={isBright?'rgba(255,255,255,1)':'rgba(255,255,255,0.55)'}
+                  strokeWidth={isBright?0.8:0.22}
+                  strokeLinejoin="round"
+                />
+              </g>
+            )
+          })}
+          <circle cx="50" cy="50" r="9" fill="white" opacity="0.98" style={{filter:'drop-shadow(0 0 8px white)'}}/>
+        </svg>
+
+        <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
+          <span className="text-[9px] tracking-[0.45em] text-cyan-900/55 font-bold drop-shadow-[0_0_12px_white]">MAGMORE V10.1</span>
+          <span className="text-[10px] mt-1.5 tracking-[0.22em] text-cyan-900/70 font-bold drop-shadow-[0_0_12px_white]">NOYAU ACTIF 100%</span>
         </div>
       </div>
     </main>
