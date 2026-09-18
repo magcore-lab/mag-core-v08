@@ -1,15 +1,5 @@
 
-import "./globals.css";
-
 export const metadata = {
-  title: "MAGMORE ENGINE — ENTER THE CORE — V10.2 PULSATION",
-  description: "MAGMORE V10.2 PULSATION ULTRA-BRILLANT",
+  title: "MAGCORE ENGINE — ENTER THE CORE",
+  description: "MAGCORE V11.2 — DIAMANT PUR SANS ANNEAUX — FINAL",
 };
-
-export default function RootLayout({children}:{children:React.ReactNode}){
-  return (
-    <html lang="fr">
-      <body>{children}</body>
-    </html>
-  )
-}
