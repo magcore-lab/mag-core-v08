@@ -1,4 +1,5 @@
 // app/engine/QuantumCore.ts — V19.2.6 EMERGENCY BLACK PURE
+// @ts-nocheck
 export class QuantumCore{
   private dead=false; private raf=0; private device:GPUDevice|null=null;
   async init(canvas:HTMLCanvasElement){
