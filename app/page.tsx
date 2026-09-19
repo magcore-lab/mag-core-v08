@@ -1,46 +1,14 @@
-
-    'use client'
-import { useEffect, useRef } from 'react'
-import { QuantumCore } from './engine/QuantumCore'
-
-export default function Page() {
-  const canvasRef = useRef<HTMLCanvasElement>(null)
-  const coreRef = useRef<QuantumCore | null>(null)
-
-  useEffect(() => {
-    if (!canvasRef.current) return
-    const core = new QuantumCore()
-    coreRef.current = core
-    const canvas = canvasRef.current
-    canvas.width = window.innerWidth
-    canvas.height = window.innerHeight
-    core.init(canvas)
-    const onResize = () => {
-      if (!canvasRef.current) return
-      canvasRef.current.width = window.innerWidth
-      canvasRef.current.height = window.innerHeight
-    }
-    window.addEventListener('resize', onResize)
-    return () => {
-      window.removeEventListener('resize', onResize)
-      core.destroy()
-    }
-  }, [])
-
-  return (
-    <main className="min-h-screen bg-black overflow-hidden">
-      <div className="relative w-[min(100vw,100vh)] h-[min(100vw,100vh)] mx-auto"
-        style={{
-          background: 'radial-gradient(circle at center, #0a0a0a 0%, #000000 70%)'
-        }}
-      >
-        <canvas
-          ref={canvasRef}
-          className="absolute inset-0 w-full h-full"
-          style={{ background: '#000000' }}
-        />
+'use client'
+export default function Page(){
+  return(
+    <main style={{width:'100vw',height:'100vh',background:'#000000',margin:0,padding:0,overflow:'hidden'}}>
+      <div style={{
+        width:'100%',height:'100%',
+        background:'radial-gradient(circle at 50% 50%, #0a0a0a 0%, #000000 70%)',
+        display:'flex',alignItems:'center',justifyContent:'center'
+      }}>
+        <div style={{width:'1px',height:'1px',background:'#111',boxShadow:'0 0 200px 100px #11111120',borderRadius:'50%'}}/>
       </div>
     </main>
   )
 }
-      
