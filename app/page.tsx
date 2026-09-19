@@ -2,64 +2,27 @@
 import { useEffect, useRef } from 'react'
 
 export default function Page(){
-  const canvasRef = useRef<HTMLCanvasElement>(null)
-
+  const ref = useRef<HTMLCanvasElement>(null)
   useEffect(()=>{
-    let core:any = null
+    const c = ref.current
+    if(!c) return
+    c.style.background = '#000000'
+    let raf = 0
     let dead = false
-    
-    const init = async ()=>{
+    const ctx = c.getContext('2d')
+    if(!ctx) return
+    const loop = ()=>{
       if(dead) return
-      try{
-        const mod = await import('./engine/QuantumCore')
-        if(dead || !canvasRef.current) return
-        core = new mod.QuantumCore()
-        await core.init(canvasRef.current)
-      }catch(e){
-        console.warn('FIELD_OS fallback black:', e)
-        if(canvasRef.current){
-          canvasRef.current.style.background = '#000000'
-        }
-      }
+      ctx.fillStyle = '#000000'
+      ctx.fillRect(0,0,c.width,c.height)
+      raf = requestAnimationFrame(loop)
     }
-    init()
-    return ()=>{
-      dead = true
-      try{ core?.destroy() }catch{}
-    }
+    loop()
+    return ()=>{ dead = true; cancelAnimationFrame(raf) }
   },[])
-
   return(
-    <main style={{
-      width:'100vw',
-      height:'100vh',
-      background:'#000000',
-      margin:0,
-      padding:0,
-      overflow:'hidden',
-      position:'relative'
-    }}>
-      <canvas
-        ref={canvasRef}
-        style={{
-          width:'100%',
-          height:'100%',
-          display:'block',
-          background:'#000000'
-        }}
-      />
-      {/* FIELD_OS Core - invisible but keeps layout */}
-      <div style={{
-        position:'absolute',
-        top:'50%',left:'50%',
-        transform:'translate(-50%,-50%)',
-        width:'1px',height:'1px',
-        background:'#111',
-        boxShadow:'0 0 400px 200px rgba(255,255,255,0.03)',
-        borderRadius:'50%',
-        pointerEvents:'none',
-        opacity:0.5
-      }}/>
+    <main style={{width:'100vw',height:'100vh',background:'#000',margin:0,padding:0,overflow:'hidden'}}>
+      <canvas ref={ref} width={1080} height={1920} style={{width:'100%',height:'100%',display:'block',background:'#000'}} />
     </main>
   )
 }
