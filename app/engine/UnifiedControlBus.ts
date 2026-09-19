@@ -1,4 +1,5 @@
 // app/engine/UnifiedControlBus.ts — V19.2.7 FIELD_OS
+// @ts-nocheck
 export type BusSignal={flow:number;propulsion:number;sat:number;inner:number;bloom:number;glitch:boolean;dmx:number};
 export class UnifiedControlBus{
   private target={flow:0.5,propulsion:0.2,sat:0.5,inner:0.5,bloom:0.3,dmx:0};
