@@ -1,16 +1,59 @@
 import { ImageResponse } from "next/og";
+
+export const runtime = "edge";
+export const alt = "MAG CORE — THE CORE™";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
-export const alt = "MAG CORE V08 - BLACK EDITION | FIELD_OS - 7 ondes blanches pur ultra lumineuses, noyau Vantablack, noir cinéma total - LAB_SYSTEM // 01";
 
-export default function Image() {
+export default async function Image() {
   return new ImageResponse(
     (
-      <div style={{ background: "black", width: "100%", height: "100%", display: "flex", alignItems: "center", justifyContent: "center", flexDirection: "column" }}>
-        <div style={{ width: 420, height: 420, borderRadius: 999, background: "white", boxShadow: "0 0 120px white", display: "flex" }} />
-        <div style={{ color: "white", fontSize: 42, letterSpacing: "0.4em", marginTop: 40 }}>MAG CORE V08 | FIELD_OS</div>
-        <div style={{ color: "white", opacity: 0.5, fontSize: 18, letterSpacing: "0.3em", marginTop: 10 }}>7 ONDES • BLANC PUR ULTRA LUMINEUX</div>
+      <div
+        style={{
+          width: "100%",
+          height: "100%",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+          background: "#000000",
+          color: "white",
+        }}
+      >
+        <div
+          style={{
+            fontSize: 96,
+            fontWeight: 900,
+            letterSpacing: "-0.05em",
+            display: "flex",
+          }}
+        >
+          MAG CORE — THE CORE™
+        </div>
+        <div
+          style={{
+            marginTop: 24,
+            fontSize: 24,
+            letterSpacing: "0.2em",
+            color: "#FF0033",
+            display: "flex",
+          }}
+        >
+          V19 BLACK EDITION | MAG CORE OS — Core Lock V08
+        </div>
+        <div
+          style={{
+            marginTop: 12,
+            fontSize: 18,
+            letterSpacing: "0.3em",
+            color: "#1A1A1A",
+            display: "flex",
+          }}
+        >
+          7 ONDES • CORE ACTIF • DIAMANT PUR
+        </div>
       </div>
-    )
+    ),
+    { ...size }
   );
 }
