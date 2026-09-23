@@ -3,25 +3,40 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://mag-core-v08.vercel.app"),
   title: "MAG CORE — THE CORE™",
-  description:
-    "MAG CORE — THE CORE™ — V19 BLACK EDITION | MAG CORE OS — Core Lock V08 — DIAMANT PUR SANS ANNEAU — FINAL",
+  description: "V19 BLACK EDITION | MAG CORE OS — Core Lock V08",
+  manifest: "/manifest.webmanifest",
+  icons: {
+    icon: "/icon.png",
+    apple: "/icon.png",
+  },
   openGraph: {
     title: "MAG CORE — THE CORE™",
-    description:
-      "V19 BLACK EDITION | MAG CORE OS — Core Lock V08 — 7 ONDES — DIAMANT PUR",
-    type: "website",
-    locale: "en_US",
+    description: "V19 BLACK EDITION | MAG CORE OS — Core Lock V08",
+    url: "https://mag-core-v08.vercel.app",
     siteName: "MAG CORE — THE CORE™",
+    images: [
+      {
+        url: "/opengraph-image",
+        width: 1200,
+        height: 630,
+        alt: "MAG CORE — THE CORE™",
+      },
+    ],
+    type: "website",
   },
   twitter: {
     card: "summary_large_image",
     title: "MAG CORE — THE CORE™",
     description: "V19 BLACK EDITION | MAG CORE OS — Core Lock V08",
+    images: ["/opengraph-image"],
   },
-  manifest: "/manifest.json",
-  icons: {
-    icon: "/icon.tsx",
+  themeColor: "#FF0033",
+  viewport: {
+    width: "device-width",
+    initialScale: 1,
+    maximumScale: 1,
   },
 };
 
@@ -31,8 +46,18 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <body>{children}</body>
+    <html lang="fr">
+      <body
+        style={{
+          margin: 0,
+          background: "#000000",
+          overflow: "hidden",
+          width: "100vw",
+          height: "100vh",
+        }}
+      >
+        {children}
+      </body>
     </html>
   );
 }
