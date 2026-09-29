@@ -1,0 +1,39 @@
+name: MAG ATLAS Proof Engine RC1
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+jobs:
+  proof:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Generate hashes
+        run: python3 generate_hashes.py
+      - name: Generate manifest
+        run: python3 generate_manifest.py
+      - name: Verify
+        run: python3 verify_rc1.py
+      - name: Build zip + sha256
+        run: |
+          python3 -c "
+          import zipfile, hashlib
+          from pathlib import Path
+          z = zipfile.ZipFile('MAGCORE_SP01_RC1_proofpack.zip','w',1)
+          [z.write(p) for p in Path('MAGCORE_SP01_RC1').rglob('*') if p.is_file()]
+          z.close()
+          h = hashlib.sha256(open('MAGCORE_SP01_RC1_proofpack.zip','rb').read()).hexdigest()
+          Path('MAGCORE_SP01_RC1_proofpack.sha256').write_text(h+' proofpack.zip\n')
+          print(h)
+          "
+      - uses: actions/upload-artifact@v4
+        with:
+          name: proofpack-rc1
+          path: |
+            MAGCORE_SP01_RC1/3. Proof/hashes.txt
+            MAGCORE_SP01_RC1/3. Proof/manifest.json
+            MAGCORE_SP01_RC1_proofpack.zip
+            MAGCORE_SP01_RC1_proofpack.sha256
