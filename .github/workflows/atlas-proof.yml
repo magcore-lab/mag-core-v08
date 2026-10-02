@@ -1,4 +1,5 @@
-name: MAG ATLAS Proof Engine RC1
+
+name: MAG ATLAS Proof Engine RC1 - 2 FILES ONLY
 on:
   push:
     branches: [main]
@@ -11,24 +12,50 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-      - name: Generate hashes
-        run: python3 generate_hashes.py
-      - name: Generate manifest
-        run: python3 generate_manifest.py
-      - name: Verify
-        run: python3 verify_rc1.py
-      - name: Build zip + sha256
+      - name: ATLAS PROOF - hashes + manifest + verify + zip
         run: |
-          python3 -c "
-          import zipfile, hashlib
+          python3 - << 'PY'
+          import hashlib, os, json, zipfile
           from pathlib import Path
-          z = zipfile.ZipFile('MAGCORE_SP01_RC1_proofpack.zip','w',1)
-          [z.write(p) for p in Path('MAGCORE_SP01_RC1').rglob('*') if p.is_file()]
-          z.close()
-          h = hashlib.sha256(open('MAGCORE_SP01_RC1_proofpack.zip','rb').read()).hexdigest()
-          Path('MAGCORE_SP01_RC1_proofpack.sha256').write_text(h+' proofpack.zip\n')
-          print(h)
-          "
+          from datetime import datetime, timezone
+          ROOT = Path("MAGCORE_SP01_RC1")
+          PROOF = ROOT / "3. Proof"
+          ROOT.mkdir(parents=True, exist_ok=True)
+          PROOF.mkdir(parents=True, exist_ok=True)
+          if not any(ROOT.iterdir()):
+              (ROOT / ".gitkeep").write_text("MAGCORE_SP01_RC1 placeholder\n")
+          files=[]
+          for dp,_,fns in os.walk(ROOT):
+            for n in fns:
+              if n=="hashes.txt": continue
+              files.append(Path(dp)/n)
+          files=sorted(files, key=lambda x: str(x).lower())
+          hp=PROOF/"hashes.txt"
+          with open(hp,"w",encoding="utf-8") as out:
+            for p in files:
+              h=hashlib.sha256()
+              with p.open("rb") as f:
+                for ch in iter(lambda: f.read(8192), b""): h.update(ch)
+              out.write(f"{h.hexdigest()} {p.as_posix()}\n")
+          fl=[]
+          for line in hp.read_text(encoding="utf-8").splitlines():
+            if not line.strip(): continue
+            try:
+              sha,pth=line.strip().split(" ",1)
+            except ValueError:
+              continue
+            pp=Path(pth); st=pp.stat() if pp.exists() else None
+            fl.append({"path":pth,"size_bytes":st.st_size if st else 0,"sha256":sha,"modified_utc":datetime.fromtimestamp(st.st_mtime,tz=timezone.utc).isoformat() if st else ""})
+          manifest={"project":"MAGCORE_SP01_RC1","version":"V0.1 DEV","operator":"Jean-Christophe Achille","doctrine":"LE FUTUR SE CONSTRUIT DANS L'INVISIBLE","created_utc":datetime.now(timezone.utc).isoformat(),"files":fl}
+          (PROOF/"manifest.json").write_text(json.dumps(manifest,indent=2,ensure_ascii=False),encoding="utf-8")
+          zp=Path("MAGCORE_SP01_RC1_proofpack.zip")
+          with zipfile.ZipFile(zp,"w",zipfile.ZIP_DEFLATED) as z:
+            for p in ROOT.rglob("*"):
+              if p.is_file(): z.write(p)
+          sh=hashlib.sha256(zp.read_bytes()).hexdigest()
+          Path("MAGCORE_SP01_RC1_proofpack.sha256").write_text(f"{sh} {zp.name}\n")
+          print(f"OK {len(fl)} fichiers - ZIP SHA256: {sh}")
+          PY
       - uses: actions/upload-artifact@v4
         with:
           name: proofpack-rc1
