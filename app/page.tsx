@@ -146,7 +146,7 @@ export default function Page() {
           if (!other) return;
           const sameCell = nKey === key;
           for (let i = 0; i < indices.length; i++) {
-            const startJ = sameCell ? i + 1 : 0;
+            const startJ = sameCell? i + 1 : 0;
             for (let j = startJ; j < other.length; j++) {
               checks++;
               const a = particles[indices[i]];
@@ -181,7 +181,7 @@ export default function Page() {
     const intervalMs = (60 / bpm / 4) * 1000;
     tickIntervalRef.current = window.setInterval(() => {
       const nextBeat = (beatRef.current % 32) + 1;
-      const nextBar = nextBeat === 1 ? (barRef.current % 32) + 1 : barRef.current;
+      const nextBar = nextBeat === 1? (barRef.current % 32) + 1 : barRef.current;
       beatRef.current = nextBeat; barRef.current = nextBar;
       if (nextBeat === 1) {
         if (tvHoldBarsRef.current > 0) {
@@ -203,7 +203,7 @@ export default function Page() {
         setBeat(nextBeat);
       }
       if (nextBeat % 2 === 1 && audioCtxRef.current) {
-        const audioT = audioCtxRef.current.currentTime + (isTrap ? 0.35 : 0.18);
+        const audioT = audioCtxRef.current.currentTime + (isTrap? 0.35 : 0.18);
         const bufferSize = audioCtxRef.current.sampleRate * 0.08;
         const buffer = audioCtxRef.current.createBuffer(1, bufferSize, audioCtxRef.current.sampleRate);
         const data = buffer.getChannelData(0);
@@ -239,7 +239,7 @@ export default function Page() {
   const handleContainerPointerMove = useCallback((e: React.PointerEvent) => {
     if (dragIdxRef.current === null) return;
     const target = document.elementFromPoint(e.clientX, e.clientY);
-    const closest = target ? (target as HTMLElement).closest("[data-idx]") : null;
+    const closest = target? (target as HTMLElement).closest("[data-idx]") : null;
     if (!closest) return;
     const attr = (closest as HTMLElement).getAttribute("data-idx");
     if (!attr) return;
@@ -275,12 +275,12 @@ export default function Page() {
         PAPER TEXTURE 120 | ARCHIVE VINYL -24dB | MAG CORE EXCL 8 | BROADCAST SAFE Rec.709 | FIELD_OS SP01 FILM PILOTE GO PUR 60/60 ATLAS CLEAN VERIFIED BEAT {beat} BAR {bar} CONF {confidence.toFixed(1)} {coherenceLabel}
       </div>
       <div className="flex flex-wrap gap-2 mb-3">
-        <button onClick={handleInitAudio} className="px-4 py-2 border bg-yellow-900 border-yellow-500 text-yellow-300">{audioReady ? "AUDIO READY" : "INIT AUDIO"}</button>
+        <button onClick={handleInitAudio} className="px-4 py-2 border bg-yellow-900 border-yellow-500 text-yellow-300">{audioReady? "AUDIO READY" : "INIT AUDIO"}</button>
         {Object.keys(STYLES).map((k) => {
           const key = k as StyleKey;
           const active = styleKey === key;
           return (
-            <button key={k} onClick={() => setStyleKey(key)} className={`px-3 py-2 border ${active ? "bg-yellow-900 border-yellow-400 text-yellow-200" : "border-zinc-700 text-zinc-400"}`}>{STYLES[key].label}</button>
+            <button key={k} onClick={() => setStyleKey(key)} className={`px-3 py-2 border ${active? "bg-yellow-900 border-yellow-400 text-yellow-200" : "border-zinc-700 text-zinc-400"}`}>{STYLES[key].label}</button>
           );
         })}
         <div className="text-xs text-zinc-400 flex items-center gap-3">PERF {perf.checks}/{perf.theoretical} {perf.timeMs.toFixed(2)}ms | ENERGY {(energyRef.current * 100).toFixed(0)}% | TV HOLD {tvHoldDisplay}</div>
@@ -310,7 +310,7 @@ export default function Page() {
           <div className="text-yellow-400 text-sm mb-2">TV BROADCAST {tvSlot} HOLD {tvHoldDisplay}b</div>
           <div className="grid grid-cols-2 gap-1">
             {TV_SLOTS.map((s) => (
-              <button key={s.id} onClick={() => handleTvClick(s.id)} className={`p-2 text-xs border ${tvSlot === s.id ? "bg-blue-900 border-blue-400" : "border-zinc-700"}`}>{s.label} DMX {s.dmx}</button>
+              <button key={s.id} onClick={() => handleTvClick(s.id)} className={`p-2 text-xs border ${tvSlot === s.id? "bg-blue-900 border-blue-400" : "border-zinc-700"}`}>{s.label} DMX {s.dmx}</button>
             ))}
           </div>
           <div className="mt-2 text-xs text-zinc-500">DMX CH INIT: {DMX_CH_INIT.join(", ")} | MASTER 255 CH145-152 DIMMER 128 CH153-160</div>
