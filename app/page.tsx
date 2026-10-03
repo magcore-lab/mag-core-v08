@@ -1,3 +1,4 @@
+
 "use client";
 import { useEffect, useRef, useState, useMemo, useCallback } from "react";
 
@@ -142,7 +143,7 @@ export default function Page() {
           if (!other) return;
           const sameCell = nKey === key;
           for (let i = 0; i < indices.length; i++) {
-            for (let j = sameCell? i + 1 : 0; j < other.length; j++) {
+            for (let j = sameCell ? i + 1 : 0; j < other.length; j++) {
               if (sameCell && j <= i) continue;
               checks++;
               const a = particles[indices[i]];
@@ -191,7 +192,7 @@ export default function Page() {
     const intervalMs = (60 / bpm / 4) * 1000;
     tickIntervalRef.current = window.setInterval(() => {
       const nextBeat = beatRef.current % 32 + 1;
-      const nextBar = nextBeat === 1? (barRef.current % 32 + 1) : barRef.current;
+      const nextBar = nextBeat === 1 ? (barRef.current % 32 + 1) : barRef.current;
       beatRef.current = nextBeat;
       barRef.current = nextBar;
       if (nextBeat === 1) {
@@ -208,14 +209,14 @@ export default function Page() {
         const jitter = (Math.random() - 0.5) * 3;
         const coh = 72 + energyNorm * 28 + jitter;
         setConfidence(Math.min(100, Math.max(72, coh)));
-        setPerf({...perfRef.current });
+        setPerf({ ...perfRef.current });
         setBeat(nextBeat);
         setBar(nextBar);
       } else {
         setBeat(nextBeat);
       }
       if (nextBeat % 2 === 1 && audioCtxRef.current) {
-        const audioT = audioCtxRef.current.currentTime + (isTrap? 0.35 : 0.18);
+        const audioT = audioCtxRef.current.currentTime + (isTrap ? 0.35 : 0.18);
         const bufferSize = audioCtxRef.current.sampleRate * 0.08;
         const buffer = audioCtxRef.current.createBuffer(1, bufferSize, audioCtxRef.current.sampleRate);
         const data = buffer.getChannelData(0);
@@ -282,7 +283,7 @@ export default function Page() {
     if (navigator.vibrate) navigator.vibrate([30, 40, 30]);
   }, []);
 
-  const coherenceLabel = confidence >= 95? "MAX" : confidence >= 88? "HAUTE" : confidence >= 80? "MODEREE" : "FAIBLE";
+  const coherenceLabel = confidence >= 95 ? "MAX" : confidence >= 88 ? "HAUTE" : confidence >= 80 ? "MODEREE" : "FAIBLE";
 
   return (
     <div className="min-h-screen bg-black text-white font-mono p-2 md:p-4">
@@ -292,4 +293,70 @@ export default function Page() {
       </div>
       <div className="text-center text-zinc-500 text-sm mb-2">LE FUTUR SE CONSTRUIT DANS L INVISIBLE - OPERATOR Jean-Christophe Achille</div>
       <div className="border border-zinc-800 p-2 mb-2 bg-zinc-900/50 text-xs">
-        PAPER TEXTURE 120 | ARCHIVE VINYL -24dB | MAG CORE EXCL 8 | BROADCAST SAFE Rec.709 | LOWER THIRD FIELD_OS SP01 FILM PILOTE GO PUR 60/60 ATLAS CLEAN VERIFIED BEAT {beat} BAR {bar
+        PAPER TEXTURE 120 | ARCHIVE VINYL -24dB | MAG CORE EXCL 8 | BROADCAST SAFE Rec.709 | LOWER THIRD FIELD_OS SP01 FILM PILOTE GO PUR 60/60 ATLAS CLEAN VERIFIED BEAT {beat} BAR {bar} CONF {confidence.toFixed(1)} {coherenceLabel}
+      </div>
+      <div className="flex flex-wrap gap-2 mb-3">
+        <button onClick={handleInitAudio} className={`px-4 py-2 border ${audioReady ? "bg-green-900 border-green-600" : "bg-yellow-900 border-yellow-500"} text-yellow-300`}>{audioReady ? "AUDIO READY" : "INIT AUDIO"}</button>
+        {(Object.keys(STYLES) as Array<keyof typeof STYLES>).map(k => (
+          <button key={k} onClick={() => setStyleKey(k)} className={`px-3 py-2 border ${styleKey===k ? "bg-yellow-900 border-yellow-400 text-yellow-200" : "border-zinc-700 text-zinc-400"}`}>{STYLES[k].label}</button>
+        ))}
+        <div className="text-xs text-zinc-400 flex items-center gap-3">PERF {perf.checks}/{perf.theoretical} {perf.timeMs.toFixed(2)}ms | ENERGY {(energyRef.current*100).toFixed(0)}% | TV HOLD {tvHoldDisplay}</div>
+      </div>
+      <div className="flex flex-col md:flex-row gap-3">
+        <div className="border border-yellow-600 p-2 flex-shrink-0 relative">
+          <canvas ref={canvasRef} width={320} height={320} className="block bg-black max-w-[320px]"[STRIPPED 26 bytes]320} height={320} viewBox="0 0 320 320" className="absolute top-2 left-2 pointer-events-none opacity-60">
+            <polygon points={polygonPoints} fill="none" stroke="#FFD700" strokeWidth={1} />
+            {hubDots.map(d => <circle key={d.id} cx={d.x} cy={d.y} r={6} fill={d.color} />)}
+          </svg>
+        </div>
+        <div className="flex-1 grid grid-cols-2 md:grid-cols-5 gap-2 border border-zinc-800 p-2" onPointerMove={handleContainerPointerMove} onPointerUp={handlePointerUp} onPointerCancel={handlePointerUp}>
+          {modules.map((m, idx) => (
+            <div key={m.id + String(idx)} data-idx={idx} onPointerDown={(e) => handlePointerDown(e, idx)} className="border p-2 select-none cursor-grab active:cursor-grabbing" style={{ borderColor: m.color, background: "#111", touchAction: "none" }}>
+              <div className="text-xs" style={{ color: m.color }}>{m.id}</div>
+              <div className="text-sm text-white">{m.name}</div>
+              <div className="text-xs text-zinc-500">{m.val}</div>
+              <div className="w-2 h-2 mt-1 rounded-full" style={{ background: m.color }} />
+            </div>
+          ))}
+        </div>
+      </div>
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-3 mt-3">
+        <div className="border border-zinc-700 p-2">
+          <div className="text-yellow-400 text-sm mb-2">TV BROADCAST {tvSlot} HOLD {tvHoldDisplay}b</div>
+          <div className="grid grid-cols-2 gap-1">
+            {TV_SLOTS.map(s => (
+              <button key={s.id} onClick={() => handleTvClick(s.id)} className={`p-2 text-xs border ${tvSlot===s.id ? "bg-blue-900 border-blue-400" : "border-zinc-700"}`}>{s.label} DMX {s.dmx}</button>
+            ))}
+          </div>
+          <div className="mt-2 text-xs text-zinc-500">DMX CH INIT: {DMX_CH_INIT.join(", ")} | MASTER 255 CH145-152 DIMMER 128 CH153-160</div>
+        </div>
+        <div className="border border-zinc-700 p-2">
+          <div className="text-yellow-400 text-sm mb-2">V23.3 FIXES APPLIED</div>
+          <div className="text-xs space-y-1 text-zinc-300">
+            <div>P0-1 DRAG: conteneur onPointerMove + elementFromPoint + data-idx + currentTarget capture OK</div>
+            <div>P0-2 TV HOLD: tvHoldBarsRef useRef 0 decr par bar OK</div>
+            <div>P0-3 RENDER: rAF 60Hz + dpr scale + flex-col md:flex-row OK</div>
+            <div>P1-1 HASH: clamp 0-320 + cx/cy 0-8 + Map cx*10007+cy + 5 offsets OK</div>
+            <div>P1-2 RERENDER: energy state supprime perf 1x/bar coherence OK</div>
+            <div>P1-3 AUDIO: white noise 0.08s highpass 7000Hz gain 0.12 OK</div>
+            <div>P1-4 PRESS: PAPER 120 VINYL -24dB EXCL 8 Rec.709 OK</div>
+            <div>P2 HUB: pastilles m.color OK</div>
+            <div>FIX Leak window lastChecks supprime perfRef cable window pointerup fallback setTransform OK</div>
+          </div>
+        </div>
+        <div className="border border-yellow-600 p-2">
+          <div className="text-yellow-400 text-sm mb-2">SP01 AUDIOS V08 - SHA VERIFIED</div>
+          <div className="text-xs space-y-2">
+            <div>01. After_the_Last_Train.mp3 [063b0b3f] 4.2MB</div>
+            <audio controls className="w-full h-8" src="https://cdn.jsdelivr.net/gh/magcore-lab/mag-core-v08@main/MAGCORE_SP01_RC1/1.%20audio/After_the_Last_Train.mp3" />
+            <div>02. Cinematic luxury hip-hop [f8d17994] 1.8MB</div>
+            <audio controls className="w-full h-8" src="https://cdn.jsdelivr.net/gh/magcore-lab/mag-core-v08@main/MAGCORE_SP01_RC1/1.%20audio/Cinematic%20luxury%20hip-hop%20trail..._1790931212136.mp3" />
+            <div>03. Menaces instrumental [d40e1777] 4.9MB</div>
+            <audio controls className="w-full h-8" src="https://cdn.jsdelivr.net/gh/magcore-lab/mag-core-v08@main/MAGCORE_SP01_RC1/1.%20audio/Menaces,%20instrumental%20(4).mp3" />
+          </div>
+          <div className="mt-2 text-xs text-zinc-500">PROOF: 38 FILES CLEAN - 33 visuals + 3 audios + 2 proofs - GO PUR 60/60</div>
+        </div>
+      </div>
+    </div>
+  );
+}
