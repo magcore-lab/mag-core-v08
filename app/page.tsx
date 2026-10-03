@@ -93,7 +93,9 @@ export default function Page() {
   }, [modules]);
 
   useEffect(() => {
-    const handleWindowUp = () => { dragIdxRef.current = null; };
+    const handleWindowUp = () => {
+      dragIdxRef.current = null;
+    };
     window.addEventListener("pointerup", handleWindowUp);
     window.addEventListener("pointercancel", handleWindowUp);
     return () => {
@@ -122,7 +124,8 @@ export default function Page() {
       const cellSize = 40;
       const grid = new Map<number, number[]>();
       particles.forEach((p, idx) => {
-        p.x += p.vx; p.y += p.vy;
+        p.x += p.vx;
+        p.y += p.vy;
         if (p.x < 0 || p.x > 320) p.vx *= -1;
         if (p.y < 0 || p.y > 320) p.vy *= -1;
         p.x = Math.min(320, Math.max(0, p.x));
@@ -140,31 +143,46 @@ export default function Page() {
         const cx = Math.floor(key / 10007);
         const cy = key % 10007;
         offsets.forEach((off) => {
-          const ox = off[0]; const oy = off[1];
+          const ox = off[0];
+          const oy = off[1];
           const nKey = (cx + ox) * 10007 + (cy + oy);
           const other = grid.get(nKey);
           if (!other) return;
           const sameCell = nKey === key;
           for (let i = 0; i < indices.length; i++) {
-            const startJ = sameCell? i + 1 : 0;
+            const startJ = sameCell ? i + 1 : 0;
             for (let j = startJ; j < other.length; j++) {
               checks++;
               const a = particles[indices[i]];
               const b = particles[other[j]];
-              const dx = a.x - b.x; const dy = a.y - b.y;
+              const dx = a.x - b.x;
+              const dy = a.y - b.y;
               if (dx * dx + dy * dy < 900) {
                 ctx.strokeStyle = "rgba(255,215,0,0.15)";
-                ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke();
+                ctx.beginPath();
+                ctx.moveTo(a.x, a.y);
+                ctx.lineTo(b.x, b.y);
+                ctx.stroke();
               }
             }
           }
         });
       });
       particles.forEach((p) => {
-        ctx.fillStyle = "#FFD700"; ctx.beginPath(); ctx.arc(p.x, p.y, 2, 0, Math.PI * 2); ctx.fill();
+        ctx.fillStyle = "#FFD700";
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, 2, 0, Math.PI * 2);
+        ctx.fill();
       });
-      ctx.strokeStyle = "#FFD700"; ctx.lineWidth = 2;
-      ctx.beginPath(); ctx.moveTo(160, 20); ctx.lineTo(280, 160); ctx.lineTo(160, 300); ctx.lineTo(40, 160); ctx.closePath(); ctx.stroke();
+      ctx.strokeStyle = "#FFD700";
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.moveTo(160, 20);
+      ctx.lineTo(280, 160);
+      ctx.lineTo(160, 300);
+      ctx.lineTo(40, 160);
+      ctx.closePath();
+      ctx.stroke();
       const n = particles.length;
       const theoretical = (n * (n - 1)) / 2;
       const t1 = performance.now();
@@ -172,7 +190,9 @@ export default function Page() {
       rAFRef.current = requestAnimationFrame(render);
     };
     rAFRef.current = requestAnimationFrame(render);
-    return () => { cancelAnimationFrame(rAFRef.current); };
+    return () => {
+      cancelAnimationFrame(rAFRef.current);
+    };
   }, []);
 
   useEffect(() => {
@@ -181,8 +201,9 @@ export default function Page() {
     const intervalMs = (60 / bpm / 4) * 1000;
     tickIntervalRef.current = window.setInterval(() => {
       const nextBeat = (beatRef.current % 32) + 1;
-      const nextBar = nextBeat === 1? (barRef.current % 32) + 1 : barRef.current;
-      beatRef.current = nextBeat; barRef.current = nextBar;
+      const nextBar = nextBeat === 1 ? (barRef.current % 32) + 1 : barRef.current;
+      beatRef.current = nextBeat;
+      barRef.current = nextBar;
       if (nextBeat === 1) {
         if (tvHoldBarsRef.current > 0) {
           tvHoldBarsRef.current = tvHoldBarsRef.current - 1;
@@ -198,34 +219,53 @@ export default function Page() {
         const coh = 72 + energyNorm * 28 + jitter;
         setConfidence(Math.min(100, Math.max(72, coh)));
         setPerf({ checks: perfRef.current.checks, theoretical: perfRef.current.theoretical, timeMs: perfRef.current.timeMs });
-        setBeat(nextBeat); setBar(nextBar);
+        setBeat(nextBeat);
+        setBar(nextBar);
       } else {
         setBeat(nextBeat);
       }
       if (nextBeat % 2 === 1 && audioCtxRef.current) {
-        const audioT = audioCtxRef.current.currentTime + (isTrap? 0.35 : 0.18);
+        const audioT = audioCtxRef.current.currentTime + (isTrap ? 0.35 : 0.18);
         const bufferSize = audioCtxRef.current.sampleRate * 0.08;
         const buffer = audioCtxRef.current.createBuffer(1, bufferSize, audioCtxRef.current.sampleRate);
         const data = buffer.getChannelData(0);
-        for (let i = 0; i < bufferSize; i++) data[i] = Math.random() * 2 - 1;
-        const src = audioCtxRef.current.createBufferSource(); src.buffer = buffer;
-        const filter = audioCtxRef.current.createBiquadFilter(); filter.type = "highpass"; filter.frequency.value = 7000;
-        const gain = audioCtxRef.current.createGain(); gain.gain.setValueAtTime(0.12, audioT); gain.gain.exponentialRampToValueAtTime(0.001, audioT + 0.08);
-        src.connect(filter); filter.connect(gain); gain.connect(audioCtxRef.current.destination); src.start(audioT);
+        for (let i = 0; i < bufferSize; i++) {
+          data[i] = Math.random() * 2 - 1;
+        }
+        const src = audioCtxRef.current.createBufferSource();
+        src.buffer = buffer;
+        const filter = audioCtxRef.current.createBiquadFilter();
+        filter.type = "highpass";
+        filter.frequency.value = 7000;
+        const gain = audioCtxRef.current.createGain();
+        gain.gain.setValueAtTime(0.12, audioT);
+        gain.gain.exponentialRampToValueAtTime(0.001, audioT + 0.08);
+        src.connect(filter);
+        filter.connect(gain);
+        gain.connect(audioCtxRef.current.destination);
+        src.start(audioT);
       }
     }, intervalMs);
-    return () => { if (tickIntervalRef.current) clearInterval(tickIntervalRef.current); };
+    return () => {
+      if (tickIntervalRef.current) {
+        clearInterval(tickIntervalRef.current);
+      }
+    };
   }, [audioReady, currentStyle.bpm, isTrap]);
 
   const handleInitAudio = useCallback(async () => {
     if (audioCtxRef.current) return;
     const ctx = new (window.AudioContext || (window as any).webkitAudioContext)();
-    audioCtxRef.current = ctx; await ctx.resume(); setAudioReady(true);
+    audioCtxRef.current = ctx;
+    await ctx.resume();
+    setAudioReady(true);
     if (navigator.vibrate) navigator.vibrate(30);
   }, []);
 
   const handleTvClick = useCallback((slot: number) => {
-    setTvSlot(slot); tvHoldBarsRef.current = 4; setTvHoldDisplay(4);
+    setTvSlot(slot);
+    tvHoldBarsRef.current = 4;
+    setTvHoldDisplay(4);
     if (navigator.vibrate) navigator.vibrate(30);
   }, []);
 
@@ -239,7 +279,7 @@ export default function Page() {
   const handleContainerPointerMove = useCallback((e: React.PointerEvent) => {
     if (dragIdxRef.current === null) return;
     const target = document.elementFromPoint(e.clientX, e.clientY);
-    const closest = target? (target as HTMLElement).closest("[data-idx]") : null;
+    const closest = target ? (target as HTMLElement).closest("[data-idx]") : null;
     if (!closest) return;
     const attr = (closest as HTMLElement).getAttribute("data-idx");
     if (!attr) return;
@@ -275,19 +315,20 @@ export default function Page() {
         PAPER TEXTURE 120 | ARCHIVE VINYL -24dB | MAG CORE EXCL 8 | BROADCAST SAFE Rec.709 | FIELD_OS SP01 FILM PILOTE GO PUR 60/60 ATLAS CLEAN VERIFIED BEAT {beat} BAR {bar} CONF {confidence.toFixed(1)} {coherenceLabel}
       </div>
       <div className="flex flex-wrap gap-2 mb-3">
-        <button onClick={handleInitAudio} className="px-4 py-2 border bg-yellow-900 border-yellow-500 text-yellow-300">{audioReady? "AUDIO READY" : "INIT AUDIO"}</button>
+        <button onClick={handleInitAudio} className="px-4 py-2 border bg-yellow-900 border-yellow-500 text-yellow-300">{audioReady ? "AUDIO READY" : "INIT AUDIO"}</button>
         {Object.keys(STYLES).map((k) => {
           const key = k as StyleKey;
           const active = styleKey === key;
           return (
-            <button key={k} onClick={() => setStyleKey(key)} className={`px-3 py-2 border ${active? "bg-yellow-900 border-yellow-400 text-yellow-200" : "border-zinc-700 text-zinc-400"}`}>{STYLES[key].label}</button>
+            <button key={k} onClick={() => setStyleKey(key)} className={`px-3 py-2 border ${active ? "bg-yellow-900 border-yellow-400 text-yellow-200" : "border-zinc-700 text-zinc-400"}`}>{STYLES[key].label}</button>
           );
         })}
         <div className="text-xs text-zinc-400 flex items-center gap-3">PERF {perf.checks}/{perf.theoretical} {perf.timeMs.toFixed(2)}ms | ENERGY {(energyRef.current * 100).toFixed(0)}% | TV HOLD {tvHoldDisplay}</div>
       </div>
       <div className="flex flex-col md:flex-row gap-3">
         <div className="border border-yellow-600 p-2 flex-shrink-0 relative">
-          <canvas ref={canvasRef} width={320} height={320} className="block bg-black max-w-[320px]"[STRIPPED 26 bytes]320} height={320} viewBox="0 0 320 320" className="absolute top-2 left-2 pointer-events-none opacity-60">
+          <canvas ref={canvasRef} width={320} height={320} className="block bg-black max-w-[320px]" />
+          <svg width={320} height={320} viewBox="0 0 320 320" className="absolute top-2 left-2 pointer-events-none opacity-60">
             <polygon points={polygonPoints} fill="none" stroke="#FFD700" strokeWidth={1} />
             {hubDots.map((d) => (
               <circle key={d.id} cx={d.x} cy={d.y} r={6} fill={d.color} />
@@ -310,7 +351,7 @@ export default function Page() {
           <div className="text-yellow-400 text-sm mb-2">TV BROADCAST {tvSlot} HOLD {tvHoldDisplay}b</div>
           <div className="grid grid-cols-2 gap-1">
             {TV_SLOTS.map((s) => (
-              <button key={s.id} onClick={() => handleTvClick(s.id)} className={`p-2 text-xs border ${tvSlot === s.id? "bg-blue-900 border-blue-400" : "border-zinc-700"}`}>{s.label} DMX {s.dmx}</button>
+              <button key={s.id} onClick={() => handleTvClick(s.id)} className={`p-2 text-xs border ${tvSlot === s.id ? "bg-blue-900 border-blue-400" : "border-zinc-700"}`}>{s.label} DMX {s.dmx}</button>
             ))}
           </div>
           <div className="mt-2 text-xs text-zinc-500">DMX CH INIT: {DMX_CH_INIT.join(", ")} | MASTER 255 CH145-152 DIMMER 128 CH153-160</div>
