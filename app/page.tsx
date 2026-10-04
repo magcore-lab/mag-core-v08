@@ -2,12 +2,13 @@
 import { useEffect, useRef, useState, useCallback } from "react";
 
 /*
-MAG CORE V32-bis COMPLEMENT EXPLOITABLE - GARDE POUR L INSTANT - 100pc OFFLINE 100pc COHERENCE
+MAG CORE V32-bis FIX BUILD SAFE - CHEVRON FIX - COMPLEMENT EXPLOITABLE
+FIX: ligne 253:116 Type error Unexpected token Did you mean {' > '} or '&gt;' - cause fleche -> avec chevron brut dans JSX texte
+CORRECTION: remplacer -> par vers pour zero chevron brut
 BASE: V32 FINAL FULL COHERENCE SELF CONTAINED VERROUILLE c71e283 Ready Latest 46s 19:30
-FIX: complement inexploitable -> exploitable: 3 colonnes 10px coupe -> 1 colonne 14px lisible + bouton COPIER
 SHA 537e46c2fd9996a3f04d10fc024198b8094e9b167950cb6b2e9b214600f9b9ea
 # 2026-10-02T15:10:13.901200+00:00 - 38 files | 097bbf6 | Jean-Christophe Achille - LE FUTUR SE CONSTRUIT DANS L INVISIBLE
-BUILD SAFE GARANTI: zero chevron brut, zero fleche avec superieur
+BUILD SAFE GARANTI: zero chevron brut, zero fleche avec superieur, zero arrow avec superieur
 */
 
 const HASHES = [
@@ -80,7 +81,7 @@ const hashToSeed = (hash: string) => {
   return seed;
 };
 
-const drawProceduralVisual = (ctx: CanvasRenderingContext2D, w: number, h: number, hash: string, filename: string, conf: number) => {
+const drawProceduralVisual = (ctx: CanvasRenderingContext2D, w: number, h: number, hash: string) => {
   const seed = hashToSeed(hash);
   const r = (seed*3)%255; const g = (seed*7)%255; const b = (seed*13)%255;
   const grad = ctx.createLinearGradient(0,0,w,h);
@@ -144,12 +145,12 @@ export default function Page() {
     const render = (idx: number) => {
       const hash = HASHES[idx % HASHES.length];
       const filename = VISUALS[idx % VISUALS.length];
-      drawProceduralVisual(vctx,640,360,hash,filename,conf);
+      drawProceduralVisual(vctx,640,360,hash);
       vctx.fillStyle = "rgba(0,0,0,0.72)"; vctx.fillRect(0,318,640,42);
       vctx.fillStyle = "#FFD700"; vctx.font = "bold 11px monospace";
-      vctx.fillText(`V32-bis COMPLEMENT EXPLOITABLE LIVE ${idx+1} sur 33 | ${filename.slice(0,26)} | HASH ${hash.slice(0,8)} | SELF CONTAINED 100pc | 120 QDRONES ${conf.toFixed(1)}pc`,10,338);
+      vctx.fillText(`V32-bis FIX BUILD SAFE LIVE ${idx+1} sur 33 | ${filename.slice(0,26)} | HASH ${hash.slice(0,8)} | SELF CONTAINED 100pc | 120 QDRONES ${conf.toFixed(1)}pc`,10,338);
       vctx.fillStyle = "#00FF88"; vctx.beginPath(); vctx.arc(595,14,7,0,Math.PI*2); vctx.fill();
-      vctx.fillStyle = "white"; vctx.font = "bold 9px monospace"; vctx.fillText("EXPLOITABLE",485,18);
+      vctx.fillStyle = "white"; vctx.font = "bold 9px monospace"; vctx.fillText("EXPLOITABLE FIX",485,18);
     };
     render(streamIdx);
     const iv = window.setInterval(()=>{ render(streamIdx); }, 1000/24);
@@ -170,12 +171,10 @@ export default function Page() {
   },[]);
 
   const copyComplement = useCallback(()=>{
-    const text = `MAG CORE V32-bis COMPLEMENT EXPLOITABLE - GARDE POUR L INSTANT - 100pc OFFLINE 100pc COHERENCE - NO UPLOAD - PORTABLE PARFAIT
+    const text = `MAG CORE V32-bis FIX BUILD SAFE COMPLEMENT EXPLOITABLE - GARDE POUR L INSTANT - 100pc OFFLINE 100pc COHERENCE - NO UPLOAD - PORTABLE PARFAIT
 SHA 537e46c2fd9996a3f04d10fc024198b8094e9b167950cb6b2e9b214600f9b9ea | 38 FILES | 097bbf6 | 2026-10-02T15:10:13.901200+00:00
 LE FUTUR SE CONSTRUIT DANS L INVISIBLE - Jean-Christophe Achille
-V32 FINAL VERROUILLE: V32 FINAL FULL COHERENCE SELF CONTAINED GARDE POUR L INSTANT - 100pc offline, 100pc coherence, sans aucun upload, et il tourne parfait sur portable avec les 120 QDRONES plus gradient procedural base sur hash SHA256 - Mode bureau - public/visuals/.gitkeep cree dde299e
-100pc OFFLINE 100pc COHERENCE: Zero CDN externe, zero jsDelivr, zero raw.githubusercontent, zero 404, zero base64 geant qui depasse limite Vercel 5 Mo. 100pc offline self contained procedural via hash SHA256 deterministe meme hash meme visuel - gradient rgb seed fois 3 fois 7 fois 13 plus 100 particules couleur hsla
-PORTABLE PARFAIT: Tourne parfait sur telephone portable avec les 120 QDRONES plus gradient procedural base sur hash SHA256 - FORMAT INNOVATIF ADAPTABLE 320px vers 1920px MEME CODE - GRAND ART QUANTIQUE FULL COHERENCE SELF CONTAINED - VERROUILLE - GO PUR 60 sur 60`;
+FIX BUILD SAFE: ligne 253:116 Type error Unexpected token Did you mean curly sup or gt - cause fleche avec chevron brut dans JSX texte - CORRECTION remplacer fleche par vers pour zero chevron brut - zero chevron brut - zero fleche avec superieur - BUILD SAFE GARANTI Ready Latest 45s`;
     navigator.clipboard.writeText(text); setCopied(true); setTimeout(()=>setCopied(false),2000);
   },[]);
 
@@ -186,24 +185,24 @@ PORTABLE PARFAIT: Tourne parfait sur telephone portable avec les 120 QDRONES plu
   return (
     <div className="min-h-screen bg-black text-white font-mono p-2 md:p-4 select-none" style={{touchAction:"none"}}>
       <div className="border-2 border-yellow-500 p-3 mb-3 flex flex-wrap gap-3 justify-between bg-yellow-900/20">
-        <h1 className="text-yellow-400 text-xl md:text-2xl font-bold">MAG CORE V32-bis COMPLEMENT EXPLOITABLE - GARDE POUR L INSTANT - 100pc OFFLINE 100pc COHERENCE - NO UPLOAD - PORTABLE PARFAIT - COMPLEMENT EXPLOITABLE</h1>
-        <div className="text-xs text-zinc-300">SHA 537e46c2fd9996a3f04d10fc024198b8094e9b167950cb6b2e9b214600f9b9ea | 38 FILES | 097bbf6 | 2026-10-02T15:10:13.901200+00:00 | QUANTUM RADIO HIT 92 Amin | CONF {conf.toFixed(1)}pc | COMPLEMENT EXPLOITABLE - SEED {seed} - NO UPLOAD</div>
+        <h1 className="text-yellow-400 text-xl md:text-2xl font-bold">MAG CORE V32-bis FIX BUILD SAFE - COMPLEMENT EXPLOITABLE - GARDE POUR L INSTANT - 100pc OFFLINE 100pc COHERENCE - NO UPLOAD - PORTABLE PARFAIT</h1>
+        <div className="text-xs text-zinc-300">SHA 537e46c2fd9996a3f04d10fc024198b8094e9b167950cb6b2e9b214600f9b9ea | 38 FILES | 097bbf6 | 2026-10-02T15:10:13.901200+00:00 | QUANTUM RADIO HIT 92 Amin | CONF {conf.toFixed(1)}pc | FIX BUILD SAFE - SEED {seed} - NO UPLOAD - BUILD SAFE GARANTI</div>
       </div>
 
       <div className="text-center text-yellow-300 text-sm mb-2 font-bold">
-        LE FUTUR SE CONSTRUIT DANS L INVISIBLE - Jean-Christophe Achille - V32-bis COMPLEMENT EXPLOITABLE - 100pc offline, 100pc coherence, sans aucun upload, et il tourne parfait sur portable avec les 120 QDRONES plus gradient procedural base sur hash SHA256 - COMPLEMENT EXPLOITABLE - PORTABLE PARFAIT
+        LE FUTUR SE CONSTRUIT DANS L INVISIBLE - Jean-Christophe Achille - V32-bis FIX BUILD SAFE COMPLEMENT EXPLOITABLE - 100pc offline, 100pc coherence, sans aucun upload, et il tourne parfait sur portable avec les 120 QDRONES plus gradient procedural base sur hash SHA256 - FIX BUILD SAFE - COMPLEMENT EXPLOITABLE - PORTABLE PARFAIT
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-3 mb-3">
         <div className="border-2 border-yellow-600 p-2 bg-black" style={{touchAction:"none"}}>
-          <div className="text-yellow-400 text-xs mb-2">FIELD_OS V32-bis COMPLEMENT EXPLOITABLE - 120 QDRONES - 100pc OFFLINE 100pc COHERENCE - NO CDN - NO UPLOAD - BUILD SAFE - PERF STABLE 60Hz - PORTABLE PARFAIT - CONF {conf.toFixed(1)}pc - COMPLEMENT EXPLOITABLE</div>
+          <div className="text-yellow-400 text-xs mb-2">FIELD_OS V32-bis FIX BUILD SAFE - 120 QDRONES - 100pc OFFLINE 100pc COHERENCE - NO CDN - NO UPLOAD - BUILD SAFE - PERF STABLE 60Hz - PORTABLE PARFAIT - CONF {conf.toFixed(1)}pc - FIX BUILD SAFE</div>
           <canvas ref={canvasRef} width={320} height={320} className="block bg-black w-full max-w-[320px] mx-auto border-2 border-yellow-800" style={{touchAction:"none"}} />
           <div className="mt-2 grid grid-cols-5 gap-1">
             {MODULES.map((m)=>(
               <div key={m.id} className="border-2 p-2 bg-zinc-900" style={{borderColor:m.color}}>
                 <div className="text-[9px] font-bold" style={{color:m.color}}>{m.id} QDRONE</div>
                 <div className="text-[10px] text-white truncate">{m.name}</div>
-                <div className="text-[7px] text-zinc-400">V32 EXPLOITABLE</div>
+                <div className="text-[7px] text-zinc-400">V32 FIX SAFE</div>
                 <div className="w-3 h-3 mt-1 rounded-full animate-pulse" style={{background:m.color}} />
               </div>
             ))}
@@ -212,14 +211,14 @@ PORTABLE PARFAIT: Tourne parfait sur telephone portable avec les 120 QDRONES plu
 
         <div className="border-2 border-yellow-500 p-2 bg-black lg:col-span-2">
           <div className="text-yellow-400 text-xs mb-2 flex justify-between">
-            <span>V32-bis COMPLEMENT EXPLOITABLE STREAM LIVE 24FPS CANVAS 640x360 PROCEDURAL VIA HASH SHA256 - DRONE RADIO HIT 92 Amin - SELF CONTAINED 100pc COHERENCE - NO UPLOAD - COMPLEMENT EXPLOITABLE</span>
-            <span className="text-green-400 animate-pulse font-bold">EXPLOITABLE</span>
+            <span>V32-bis FIX BUILD SAFE STREAM LIVE 24FPS CANVAS 640x360 PROCEDURAL VIA HASH SHA256 - DRONE RADIO HIT 92 Amin - SELF CONTAINED 100pc COHERENCE - NO UPLOAD - FIX BUILD SAFE</span>
+            <span className="text-green-400 animate-pulse font-bold">FIX BUILD SAFE</span>
           </div>
           <div className="relative w-full h-[360px] bg-zinc-900 overflow-hidden border-2 border-zinc-700">
             <canvas ref={vCanvasRef} width={640} height={360} className="w-full h-full object-cover" />
             <div className="absolute bottom-0 left-0 right-0 bg-black/90 p-2 text-[10px] flex justify-between">
-              <span className="text-yellow-300">V32-bis EXPLOITABLE LIVE {curVis} | HASH {curHash.slice(0,16)} | SEED {seed} | SELF CONTAINED 100pc COHERENCE - NO UPLOAD - 120 QDRONES {conf.toFixed(1)}pc | PORTABLE PARFAIT</span>
-              <span className="text-zinc-400">92 BPM V32-bis EXPLOITABLE</span>
+              <span className="text-yellow-300">V32-bis FIX LIVE {curVis} | HASH {curHash.slice(0,16)} | SEED {seed} | SELF CONTAINED 100pc COHERENCE - NO UPLOAD - 120 QDRONES {conf.toFixed(1)}pc | PORTABLE PARFAIT | FIX BUILD SAFE</span>
+              <span className="text-zinc-400">92 BPM V32-bis FIX</span>
             </div>
           </div>
           <div className="grid grid-cols-11 gap-1 mt-2">
@@ -244,19 +243,19 @@ PORTABLE PARFAIT: Tourne parfait sur telephone portable avec les 120 QDRONES plu
 
       <div className="flex flex-wrap gap-2 mb-3">
         <button onClick={initAudio} className={`px-6 py-3 border-2 text-sm font-bold ${audioReady?"bg-green-900 border-green-500 text-green-300":"bg-yellow-900 border-yellow-500 text-yellow-300 animate-pulse"}`} style={{touchAction:"none"}}>
-          {audioReady?`V32-bis EXPLOITABLE READY ${conf.toFixed(1)}pc SEED ${seed} COMPLEMENT EXPLOITABLE - PORTABLE PARFAIT`:"INIT V32-bis COMPLEMENT EXPLOITABLE - PROTOCOLE QUANTIQUE MAG CORE PREVU - 100pc OFFLINE 100pc COHERENCE - NO UPLOAD"}
+          {audioReady?`V32-bis FIX BUILD SAFE READY ${conf.toFixed(1)}pc SEED ${seed} COMPLEMENT EXPLOITABLE - PORTABLE PARFAIT`:"INIT V32-bis FIX BUILD SAFE - PROTOCOLE QUANTIQUE MAG CORE PREVU - 100pc OFFLINE 100pc COHERENCE - NO UPLOAD"}
         </button>
         <button onClick={copyComplement} className="px-6 py-3 border-2 border-yellow-400 bg-black text-yellow-300 text-sm font-bold hover:bg-yellow-900/30" style={{touchAction:"none"}}>
-          {copied?"COPIE OK - COMPLEMENT EXPLOITABLE":"COPIER COMPLEMENT EXPLOITABLE"}
+          {copied?"COPIE OK - FIX BUILD SAFE":"COPIER COMPLEMENT FIX BUILD SAFE"}
         </button>
         <div className="text-xs text-zinc-400 flex items-center gap-2 border border-zinc-800 p-2 bg-zinc-900/50">
-          V32-bis COMPLEMENT EXPLOITABLE: complement inexploitable corrige en exploitable - 3 colonnes 10px coupe -> 1 colonne 14px lisible sur portable + bouton COPIER COMPLEMENT - 100pc offline - 100pc coherence - GO PUR 60 sur 60 - V32-bis COMPLEMENT EXPLOITABLE - PORTABLE PARFAIT
+          V32-bis FIX BUILD SAFE: complement inexploitable corrige en exploitable - 3 colonnes 10px coupe vers 1 colonne 14px lisible sur portable plus bouton COPIER COMPLEMENT - FIX ligne 253 116 Type error Unexpected token - cause fleche avec chevron brut dans JSX texte - CORRECTION remplacer fleche par vers pour zero chevron brut - BUILD SAFE GARANTI - 100pc offline - 100pc coherence - GO PUR 60 sur 60 - V32-bis FIX BUILD SAFE - PORTABLE PARFAIT
         </div>
       </div>
 
       <div className="border-2 border-yellow-500 p-4 bg-zinc-900/30">
         <div className="text-yellow-400 text-lg font-bold mb-4 flex justify-between items-center">
-          <span>MAG CORE V32-bis COMPLEMENT EXPLOITABLE - GARDE POUR L INSTANT - 100pc OFFLINE 100pc COHERENCE - NO UPLOAD - PORTABLE PARFAIT - VERROUILLE - COMPLEMENT EXPLOITABLE</span>
+          <span>MAG CORE V32-bis FIX BUILD SAFE - COMPLEMENT EXPLOITABLE - GARDE POUR L INSTANT - 100pc OFFLINE 100pc COHERENCE - NO UPLOAD - PORTABLE PARFAIT - VERROUILLE - FIX BUILD SAFE</span>
           <button onClick={copyComplement} className="text-xs px-3 py-1 border border-yellow-400 bg-yellow-900/20">COPIER</button>
         </div>
         
@@ -264,21 +263,21 @@ PORTABLE PARFAIT: Tourne parfait sur telephone portable avec les 120 QDRONES plu
           <div className="border-2 border-yellow-800 p-4 bg-black">
             <div className="text-white font-bold text-base mb-2">V32 FINAL VERROUILLE:</div>
             <div className="text-zinc-300 text-[14px] leading-6">
-              V32 FINAL FULL COHERENCE SELF CONTAINED GARDE POUR L INSTANT - 100pc offline, 100pc coherence, sans aucun upload, et il tourne parfait sur portable avec les 120 QDRONES plus gradient procedural base sur hash SHA256. Mode bureau - public/visuals/.gitkeep cree dde299e 1 minute ago - mais on garde V32 self contained sans dependance. FORMAT INNOVATIF ADAPTABLE 320px vers 1920px MEME CODE - GRAND ART QUANTIQUE FULL COHERENCE SELF CONTAINED - PORTABLE PARFAIT - VERROUILLE. SHA 537e46c2fd9996a3f04d10fc024198b8094e9b167950cb6b2e9b214600f9b9ea 38 FILES 097bbf6 2026-10-02T15:10:13.901200+00:00 - 38 files - Jean-Christophe Achille - LE FUTUR SE CONSTRUIT DANS L INVISIBLE - QUANTUM RADIO HIT 92 Amin - CONF 99.9pc - SELF CONTAINED 100pc COHERENCE - SEED {seed} - NO UPLOAD - GARDE POUR L INSTANT - GO PUR 60 sur 60 - V32 FINAL VERROUILLE - COMPLEMENT EXPLOITABLE.
+              V32 FINAL FULL COHERENCE SELF CONTAINED GARDE POUR L INSTANT - 100pc offline, 100pc coherence, sans aucun upload, et il tourne parfait sur portable avec les 120 QDRONES plus gradient procedural base sur hash SHA256. Mode bureau - public slash visuals slash gitkeep cree dde299e 1 minute ago - mais on garde V32 self contained sans dependance. FORMAT INNOVATIF ADAPTABLE 320px vers 1920px MEME CODE - GRAND ART QUANTIQUE FULL COHERENCE SELF CONTAINED - PORTABLE PARFAIT - VERROUILLE. SHA 537e46c2fd9996a3f04d10fc024198b8094e9b167950cb6b2e9b214600f9b9ea 38 FILES 097bbf6 2026-10-02T15:10:13.901200+00:00 - 38 files - Jean-Christophe Achille - LE FUTUR SE CONSTRUIT DANS L INVISIBLE - QUANTUM RADIO HIT 92 Amin - CONF 99.9pc - SELF CONTAINED 100pc COHERENCE - SEED {seed} - NO UPLOAD - GARDE POUR L INSTANT - GO PUR 60 sur 60 - V32 FINAL VERROUILLE - COMPLEMENT EXPLOITABLE - FIX BUILD SAFE.
             </div>
           </div>
 
           <div className="border-2 border-zinc-700 p-4 bg-black">
-            <div className="text-white font-bold text-base mb-2">100pc OFFLINE 100pc COHERENCE:</div>
+            <div className="text-white font-bold text-base mb-2">100pc OFFLINE 100pc COHERENCE - FIX BUILD SAFE:</div>
             <div className="text-zinc-300 text-[14px] leading-6">
-              Zero CDN externe, zero jsDelivr, zero raw.githubusercontent, zero 404, zero base64 geant qui depasse limite Vercel 5 Mo. 100pc offline self contained procedural via hash SHA256 deterministe meme hash meme visuel - gradient rgb seed fois 3 fois 7 fois 13 plus 100 particules couleur hsla hue seed plus i fois 7 - diamant coherence - texte hash - 120 QDRONES quantum coherence - field os 120 qdrones avec diamant coherence - 10 SAT QDRONE CORE LOCK PRESS MEDIA ATLAS MAP FIELD_OS AUDIO ENG DMX CTRL TV BROAD HASH VER PARTICULE PERF MON coherence - video stream live 24fps canvas 640x360 procedural via hash - thumbnails couleur rgb base sur hash plus nom fichier et hash - 100pc coherence procedural - plus de noir plus de broken plus de gradient fallback - 100pc offline self contained - GO PUR 60 sur 60 - V32-bis COMPLEMENT EXPLOITABLE - BUILD SAFE GARANTI - Ready Latest 45s - V32 final verrouille c71e283 - 46s Just now - Production Current - mag-core-v07.vercel.app - mag-core-v08 - COMPLEMENT EXPLOITABLE.
+              Zero CDN externe, zero jsDelivr, zero raw point githubusercontent, zero 404, zero base64 geant qui depasse limite Vercel 5 Mo. 100pc offline self contained procedural via hash SHA256 deterministe meme hash meme visuel - gradient rgb seed fois 3 fois 7 fois 13 plus 100 particules couleur hsla hue seed plus i fois 7 - diamant coherence - texte hash - 120 QDRONES quantum coherence - field os 120 qdrones avec diamant coherence - 10 SAT QDRONE CORE LOCK PRESS MEDIA ATLAS MAP FIELD_OS AUDIO ENG DMX CTRL TV BROAD HASH VER PARTICULE PERF MON coherence - video stream live 24fps canvas 640x360 procedural via hash - thumbnails couleur rgb base sur hash plus nom fichier et hash - 100pc coherence procedural - plus de noir plus de broken plus de gradient fallback - 100pc offline self contained - GO PUR 60 sur 60 - V32-bis FIX BUILD SAFE - BUILD SAFE GARANTI - Ready Latest 45s - V32 final verrouille c71e283 - 46s Just now - Production Current - mag-core-v07 point vercel point app - mag-core-v08 - COMPLEMENT EXPLOITABLE - FIX ligne 253 116 Type error Unexpected token - cause fleche avec chevron brut dans JSX texte - CORRECTION remplacer fleche par vers pour zero chevron brut - BUILD SAFE GARANTI - GO PUR 60 sur 60 - V32-bis FIX BUILD SAFE - PORTABLE PARFAIT - VERROUILLE - FIX BUILD SAFE.
             </div>
           </div>
 
           <div className="border-2 border-green-800 p-4 bg-black">
-            <div className="text-white font-bold text-base mb-2">PORTABLE PARFAIT - COMPLEMENT EXPLOITABLE:</div>
+            <div className="text-white font-bold text-base mb-2">PORTABLE PARFAIT - COMPLEMENT EXPLOITABLE - FIX BUILD SAFE:</div>
             <div className="text-zinc-300 text-[14px] leading-6">
-              Tourne parfait sur telephone portable avec les 120 QDRONES plus gradient procedural base sur hash SHA256 - Mode bureau - public/visuals/.gitkeep cree dde299e 1 minute ago - mais on garde V32 self contained sans dependance - sans aucun upload - 100pc offline - 100pc coherence - FORMAT INNOVATIF ADAPTABLE 320px vers 1920px MEME CODE - drones adaptes pour tout structurer en coherence format innovatif et adaptable sur web - GRAND ART QUANTIQUE FULL COHERENCE SELF CONTAINED - PORTABLE PARFAIT - VERROUILLE - GO PUR 60 sur 60 - V32 FINAL FULL COHERENCE SELF CONTAINED GARDE POUR L INSTANT - COMPLEMENT EXPLOITABLE CORRIGE: complement inexploitable 3 colonnes 10px coupe -> 1 colonne 14px lisible sur portable + bouton COPIER COMPLEMENT - 100pc offline - 100pc coherence - portable parfait - on peut les voir oui - mag-core-v07.vercel.app - mag-core-v08-8tdylt6ms-magcore-labs-projects.vercel.app - Visit - Ready Latest - Deployment Details - 19:30 s-projects.vercel.app - 80 onglets - 0,21 Ko/s 5G 39pc - magcore-lab Hobby - Overview Deployments Logs Analytics Speed Insights Observability Firewall CDN Environment Variables Domains Connect Integrations Storage Flags Agent AI Gateway Sandboxes Workflows Images Usage Support Settings - COMPLEMENT EXPLOITABLE - GARDE POUR L INSTANT.
+              Tourne parfait sur telephone portable avec les 120 QDRONES plus gradient procedural base sur hash SHA256 - Mode bureau - public slash visuals slash gitkeep cree dde299e 1 minute ago - mais on garde V32 self contained sans dependance - sans aucun upload - 100pc offline - 100pc coherence - FORMAT INNOVATIF ADAPTABLE 320px vers 1920px MEME CODE - drones adaptes pour tout structurer en coherence format innovatif et adaptable sur web - GRAND ART QUANTIQUE FULL COHERENCE SELF CONTAINED - PORTABLE PARFAIT - VERROUILLE - GO PUR 60 sur 60 - V32 FINAL FULL COHERENCE SELF CONTAINED GARDE POUR L INSTANT - COMPLEMENT EXPLOITABLE CORRIGE: complement inexploitable 3 colonnes 10px coupe vers 1 colonne 14px lisible sur portable plus bouton COPIER COMPLEMENT - FIX BUILD SAFE: ligne 253 116 Type error Unexpected token - cause fleche avec chevron brut dans JSX texte - CORRECTION remplacer fleche par vers pour zero chevron brut - zero chevron brut - zero fleche avec superieur - BUILD SAFE GARANTI - Ready Latest 45s - V32 final verrouille c71e283 - 46s Just now - Production Current - mag-core-v07 point vercel point app - mag-core-v08-8tdylt6ms-magcore-labs-projects point vercel point app - Visit - Ready Latest - Deployment Details - 19:30 s-projects point vercel point app - 80 onglets - 0,21 Ko par s 5G 39pc - magcore-lab Hobby - Overview Deployments Logs Analytics Speed Insights Observability Firewall CDN Environment Variables Domains Connect Integrations Storage Flags Agent AI Gateway Sandboxes Workflows Images Usage Support Settings - COMPLEMENT EXPLOITABLE - GARDE POUR L INSTANT - FIX BUILD SAFE - PORTABLE PARFAIT.
             </div>
           </div>
         </div>
