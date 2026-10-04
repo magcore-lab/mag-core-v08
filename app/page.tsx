@@ -1,14 +1,13 @@
-
 "use client";
 import { useEffect, useRef, useState, useCallback } from "react";
 
 /*
-MAG CORE V32 FINAL FULL COHERENCE SELF CONTAINED - GARDE POUR L INSTANT - 100pc OFFLINE 100pc COHERENCE
+MAG CORE V32-bis COMPLEMENT EXPLOITABLE - GARDE POUR L INSTANT - 100pc OFFLINE 100pc COHERENCE
+BASE: V32 FINAL FULL COHERENCE SELF CONTAINED VERROUILLE c71e283 Ready Latest 46s 19:30
+FIX: complement inexploitable -> exploitable: 3 colonnes 10px coupe -> 1 colonne 14px lisible + bouton COPIER
 SHA 537e46c2fd9996a3f04d10fc024198b8094e9b167950cb6b2e9b214600f9b9ea
 # 2026-10-02T15:10:13.901200+00:00 - 38 files | 097bbf6 | Jean-Christophe Achille - LE FUTUR SE CONSTRUIT DANS L INVISIBLE
-V32 FINAL: 100pc offline, 100pc coherence, sans aucun upload, tourne parfait sur portable avec 120 QDRONES + gradient procedural base sur hash SHA256
-VERROUILLE SUR TELEPHONE PORTABLE - MODE BUREAU - public/visuals/.gitkeep cree dde299e 1 minute ago - mais on garde V32 self contained sans dependance
-BUILD SAFE GARANTI: zero chevron brut, zero fleche avec superieur, ModuleType simple, Ready Latest 45s
+BUILD SAFE GARANTI: zero chevron brut, zero fleche avec superieur
 */
 
 const HASHES = [
@@ -99,11 +98,6 @@ const drawProceduralVisual = (ctx: CanvasRenderingContext2D, w: number, h: numbe
   }
   ctx.strokeStyle = "#FFD700"; ctx.lineWidth = 2.5;
   ctx.beginPath(); ctx.moveTo(w/2,20); ctx.lineTo(w-40,h/2); ctx.lineTo(w/2,h-20); ctx.lineTo(40,h/2); ctx.closePath(); ctx.stroke();
-  ctx.fillStyle = "rgba(0,0,0,0.55)"; ctx.fillRect(0,0,w,48);
-  ctx.fillStyle = "#FFD700"; ctx.font = "bold 11px monospace";
-  ctx.fillText(`${filename.slice(0,34)} - HASH ${hash.slice(0,16)} - SEED ${seed} - SELF CONTAINED 100pc COHERENCE - ${conf.toFixed(1)}pc`,10,18);
-  ctx.fillStyle = "#AAA"; ctx.font = "9px monospace";
-  ctx.fillText(`SHA256 ${hash} - PROCEDURAL OFFLINE - 120 QDRONES QUANTUM COHERENCE - NO CDN - NO UPLOAD - PORTABLE PARFAIT`,10,32);
 };
 
 export default function Page() {
@@ -112,6 +106,7 @@ export default function Page() {
   const [streamIdx, setStreamIdx] = useState(15);
   const [conf, setConf] = useState(99.9);
   const [audioReady, setAudioReady] = useState(false);
+  const [copied, setCopied] = useState(false);
 
   useEffect(()=>{
     const c = canvasRef.current; if(!c) return; const ctx = c.getContext("2d"); if(!ctx) return;
@@ -152,9 +147,9 @@ export default function Page() {
       drawProceduralVisual(vctx,640,360,hash,filename,conf);
       vctx.fillStyle = "rgba(0,0,0,0.72)"; vctx.fillRect(0,318,640,42);
       vctx.fillStyle = "#FFD700"; vctx.font = "bold 11px monospace";
-      vctx.fillText(`V32 FINAL FULL COHERENCE SELF CONTAINED LIVE ${idx+1} sur 33 | ${filename.slice(0,26)} | HASH ${hash.slice(0,8)} | SELF CONTAINED 100pc COHERENCE | 120 QDRONES ${conf.toFixed(1)}pc - NO UPLOAD - PORTABLE PARFAIT`,10,338);
+      vctx.fillText(`V32-bis COMPLEMENT EXPLOITABLE LIVE ${idx+1} sur 33 | ${filename.slice(0,26)} | HASH ${hash.slice(0,8)} | SELF CONTAINED 100pc | 120 QDRONES ${conf.toFixed(1)}pc`,10,338);
       vctx.fillStyle = "#00FF88"; vctx.beginPath(); vctx.arc(595,14,7,0,Math.PI*2); vctx.fill();
-      vctx.fillStyle = "white"; vctx.font = "bold 9px monospace"; vctx.fillText("SELF CONTAINED",485,18);
+      vctx.fillStyle = "white"; vctx.font = "bold 9px monospace"; vctx.fillText("EXPLOITABLE",485,18);
     };
     render(streamIdx);
     const iv = window.setInterval(()=>{ render(streamIdx); }, 1000/24);
@@ -174,6 +169,16 @@ export default function Page() {
     }catch(e){ setAudioReady(true); }
   },[]);
 
+  const copyComplement = useCallback(()=>{
+    const text = `MAG CORE V32-bis COMPLEMENT EXPLOITABLE - GARDE POUR L INSTANT - 100pc OFFLINE 100pc COHERENCE - NO UPLOAD - PORTABLE PARFAIT
+SHA 537e46c2fd9996a3f04d10fc024198b8094e9b167950cb6b2e9b214600f9b9ea | 38 FILES | 097bbf6 | 2026-10-02T15:10:13.901200+00:00
+LE FUTUR SE CONSTRUIT DANS L INVISIBLE - Jean-Christophe Achille
+V32 FINAL VERROUILLE: V32 FINAL FULL COHERENCE SELF CONTAINED GARDE POUR L INSTANT - 100pc offline, 100pc coherence, sans aucun upload, et il tourne parfait sur portable avec les 120 QDRONES plus gradient procedural base sur hash SHA256 - Mode bureau - public/visuals/.gitkeep cree dde299e
+100pc OFFLINE 100pc COHERENCE: Zero CDN externe, zero jsDelivr, zero raw.githubusercontent, zero 404, zero base64 geant qui depasse limite Vercel 5 Mo. 100pc offline self contained procedural via hash SHA256 deterministe meme hash meme visuel - gradient rgb seed fois 3 fois 7 fois 13 plus 100 particules couleur hsla
+PORTABLE PARFAIT: Tourne parfait sur telephone portable avec les 120 QDRONES plus gradient procedural base sur hash SHA256 - FORMAT INNOVATIF ADAPTABLE 320px vers 1920px MEME CODE - GRAND ART QUANTIQUE FULL COHERENCE SELF CONTAINED - VERROUILLE - GO PUR 60 sur 60`;
+    navigator.clipboard.writeText(text); setCopied(true); setTimeout(()=>setCopied(false),2000);
+  },[]);
+
   const curVis = VISUALS[streamIdx];
   const curHash = HASHES[streamIdx % HASHES.length];
   const seed = hashToSeed(curHash);
@@ -181,43 +186,40 @@ export default function Page() {
   return (
     <div className="min-h-screen bg-black text-white font-mono p-2 md:p-4 select-none" style={{touchAction:"none"}}>
       <div className="border-2 border-yellow-500 p-3 mb-3 flex flex-wrap gap-3 justify-between bg-yellow-900/20">
-        <h1 className="text-yellow-400 text-xl md:text-2xl font-bold">MAG CORE V32 FINAL FULL COHERENCE SELF CONTAINED - GARDE POUR L INSTANT - 100pc OFFLINE 100pc COHERENCE - NO UPLOAD - PORTABLE PARFAIT</h1>
-        <div className="text-xs text-zinc-300">SHA 537e46c2fd9996a3f04d10fc024198b8094e9b167950cb6b2e9b214600f9b9ea | 38 FILES | 097bbf6 | 2026-10-02T15:10:13.901200+00:00 | QUANTUM RADIO HIT 92 Amin | CONF {conf.toFixed(1)}pc | SELF CONTAINED 100pc COHERENCE - SEED {seed} - NO UPLOAD - GARDE POUR L INSTANT</div>
+        <h1 className="text-yellow-400 text-xl md:text-2xl font-bold">MAG CORE V32-bis COMPLEMENT EXPLOITABLE - GARDE POUR L INSTANT - 100pc OFFLINE 100pc COHERENCE - NO UPLOAD - PORTABLE PARFAIT - COMPLEMENT EXPLOITABLE</h1>
+        <div className="text-xs text-zinc-300">SHA 537e46c2fd9996a3f04d10fc024198b8094e9b167950cb6b2e9b214600f9b9ea | 38 FILES | 097bbf6 | 2026-10-02T15:10:13.901200+00:00 | QUANTUM RADIO HIT 92 Amin | CONF {conf.toFixed(1)}pc | COMPLEMENT EXPLOITABLE - SEED {seed} - NO UPLOAD</div>
       </div>
 
       <div className="text-center text-yellow-300 text-sm mb-2 font-bold">
-        LE FUTUR SE CONSTRUIT DANS L INVISIBLE - Jean-Christophe Achille - V32 FINAL FULL COHERENCE SELF CONTAINED GARDE POUR L INSTANT - 100pc offline, 100pc coherence, sans aucun upload, et il tourne parfait sur portable avec les 120 QDRONES plus gradient procedural base sur hash SHA256 - Mode bureau - public/visuals/.gitkeep cree dde299e 1 minute ago - mais on garde V32 self contained sans dependance - FORMAT INNOVATIF ADAPTABLE 320px vers 1920px MEME CODE - GRAND ART QUANTIQUE FULL COHERENCE SELF CONTAINED - PORTABLE PARFAIT
+        LE FUTUR SE CONSTRUIT DANS L INVISIBLE - Jean-Christophe Achille - V32-bis COMPLEMENT EXPLOITABLE - 100pc offline, 100pc coherence, sans aucun upload, et il tourne parfait sur portable avec les 120 QDRONES plus gradient procedural base sur hash SHA256 - COMPLEMENT EXPLOITABLE - PORTABLE PARFAIT
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-3 mb-3">
         <div className="border-2 border-yellow-600 p-2 bg-black" style={{touchAction:"none"}}>
-          <div className="text-yellow-400 text-xs mb-2">FIELD_OS V32 FINAL FULL COHERENCE SELF CONTAINED - 120 QDRONES - 100pc OFFLINE 100pc COHERENCE - NO CDN - NO UPLOAD - BUILD SAFE - PERF STABLE 60Hz - PORTABLE PARFAIT - CONF {conf.toFixed(1)}pc</div>
+          <div className="text-yellow-400 text-xs mb-2">FIELD_OS V32-bis COMPLEMENT EXPLOITABLE - 120 QDRONES - 100pc OFFLINE 100pc COHERENCE - NO CDN - NO UPLOAD - BUILD SAFE - PERF STABLE 60Hz - PORTABLE PARFAIT - CONF {conf.toFixed(1)}pc - COMPLEMENT EXPLOITABLE</div>
           <canvas ref={canvasRef} width={320} height={320} className="block bg-black w-full max-w-[320px] mx-auto border-2 border-yellow-800" style={{touchAction:"none"}} />
           <div className="mt-2 grid grid-cols-5 gap-1">
             {MODULES.map((m)=>(
               <div key={m.id} className="border-2 p-2 bg-zinc-900" style={{borderColor:m.color}}>
                 <div className="text-[9px] font-bold" style={{color:m.color}}>{m.id} QDRONE</div>
                 <div className="text-[10px] text-white truncate">{m.name}</div>
-                <div className="text-[7px] text-zinc-400">V32 SELF CONTAINED</div>
+                <div className="text-[7px] text-zinc-400">V32 EXPLOITABLE</div>
                 <div className="w-3 h-3 mt-1 rounded-full animate-pulse" style={{background:m.color}} />
               </div>
             ))}
-          </div>
-          <div className="mt-2 text-[9px] text-zinc-500">
-            V32 FINAL FULL COHERENCE SELF CONTAINED GARDE POUR L INSTANT: 100pc offline, 100pc coherence, sans aucun upload, tourne parfait sur portable avec 120 QDRONES plus gradient procedural base sur hash SHA256. Zero CDN externe, zero jsDelivr, zero raw.githubusercontent, zero 404, zero base64 geant qui depasse limite Vercel 5 Mo. public/visuals/.gitkeep cree dde299e mais on garde V32 self contained sans dependance - format innovatif adaptable 320px vers 1920px meme code - drones adaptes - build safe garanti Ready Latest 45s.
           </div>
         </div>
 
         <div className="border-2 border-yellow-500 p-2 bg-black lg:col-span-2">
           <div className="text-yellow-400 text-xs mb-2 flex justify-between">
-            <span>V32 FINAL SELF CONTAINED STREAM LIVE 24FPS CANVAS 640x360 PROCEDURAL VIA HASH SHA256 - DRONE RADIO HIT 92 Amin Am F C G BASS A2 C3 E3 G2 HOOK C5 A4 G4 E4 - SELF CONTAINED 100pc COHERENCE - NO UPLOAD</span>
-            <span className="text-green-400 animate-pulse font-bold">SELF CONTAINED 100pc COHERENCE - NO UPLOAD</span>
+            <span>V32-bis COMPLEMENT EXPLOITABLE STREAM LIVE 24FPS CANVAS 640x360 PROCEDURAL VIA HASH SHA256 - DRONE RADIO HIT 92 Amin - SELF CONTAINED 100pc COHERENCE - NO UPLOAD - COMPLEMENT EXPLOITABLE</span>
+            <span className="text-green-400 animate-pulse font-bold">EXPLOITABLE</span>
           </div>
           <div className="relative w-full h-[360px] bg-zinc-900 overflow-hidden border-2 border-zinc-700">
             <canvas ref={vCanvasRef} width={640} height={360} className="w-full h-full object-cover" />
             <div className="absolute bottom-0 left-0 right-0 bg-black/90 p-2 text-[10px] flex justify-between">
-              <span className="text-yellow-300">V32 FINAL FULL COHERENCE SELF CONTAINED LIVE {curVis} | HASH {curHash.slice(0,16)} | SEED {seed} | SELF CONTAINED 100pc COHERENCE - NO UPLOAD - 120 QDRONES {conf.toFixed(1)}pc | PORTABLE PARFAIT</span>
-              <span className="text-zinc-400">92 BPM V32 FINAL SELF CONTAINED</span>
+              <span className="text-yellow-300">V32-bis EXPLOITABLE LIVE {curVis} | HASH {curHash.slice(0,16)} | SEED {seed} | SELF CONTAINED 100pc COHERENCE - NO UPLOAD - 120 QDRONES {conf.toFixed(1)}pc | PORTABLE PARFAIT</span>
+              <span className="text-zinc-400">92 BPM V32-bis EXPLOITABLE</span>
             </div>
           </div>
           <div className="grid grid-cols-11 gap-1 mt-2">
@@ -237,35 +239,47 @@ export default function Page() {
               );
             })}
           </div>
-          <div className="mt-2 text-[9px] text-zinc-400">
-            V32 FINAL FULL COHERENCE SELF CONTAINED GARDE POUR L INSTANT: 100pc offline, 100pc coherence, sans aucun upload, et il tourne parfait sur portable avec les 120 QDRONES plus gradient procedural base sur hash SHA256. Procedural via hash SHA256 deterministe meme hash meme visuel - gradient rgb seed fois 3 fois 7 fois 13 plus 100 particules couleur hsla hue seed plus i fois 7 - diamant coherence - texte hash - 120 QDRONES quantum coherence - field os 120 qdrones avec diamant coherence - 10 SAT QDRONE CORE LOCK PRESS MEDIA ATLAS MAP FIELD_OS AUDIO ENG DMX CTRL TV BROAD HASH VER PARTICULE PERF MON coherence - video stream live 24fps canvas 640x360 procedural via hash - thumbnails couleur rgb base sur hash plus nom fichier et hash - 100pc coherence procedural - plus de noir plus de broken plus de gradient fallback - 100pc offline self contained - GO PUR 60 sur 60 - V32 FINAL FULL COHERENCE SELF CONTAINED - PORTABLE PARFAIT.
-          </div>
         </div>
       </div>
 
       <div className="flex flex-wrap gap-2 mb-3">
         <button onClick={initAudio} className={`px-6 py-3 border-2 text-sm font-bold ${audioReady?"bg-green-900 border-green-500 text-green-300":"bg-yellow-900 border-yellow-500 text-yellow-300 animate-pulse"}`} style={{touchAction:"none"}}>
-          {audioReady?`V32 FINAL SELF CONTAINED READY ${conf.toFixed(1)}pc SEED ${seed} SELF CONTAINED 100pc COHERENCE - NO UPLOAD - PORTABLE PARFAIT`:"INIT V32 FINAL FULL COHERENCE SELF CONTAINED - PROTOCOLE QUANTIQUE MAG CORE PREVU - 100pc OFFLINE 100pc COHERENCE - NO UPLOAD"}
+          {audioReady?`V32-bis EXPLOITABLE READY ${conf.toFixed(1)}pc SEED ${seed} COMPLEMENT EXPLOITABLE - PORTABLE PARFAIT`:"INIT V32-bis COMPLEMENT EXPLOITABLE - PROTOCOLE QUANTIQUE MAG CORE PREVU - 100pc OFFLINE 100pc COHERENCE - NO UPLOAD"}
+        </button>
+        <button onClick={copyComplement} className="px-6 py-3 border-2 border-yellow-400 bg-black text-yellow-300 text-sm font-bold hover:bg-yellow-900/30" style={{touchAction:"none"}}>
+          {copied?"COPIE OK - COMPLEMENT EXPLOITABLE":"COPIER COMPLEMENT EXPLOITABLE"}
         </button>
         <div className="text-xs text-zinc-400 flex items-center gap-2 border border-zinc-800 p-2 bg-zinc-900/50">
-          V32 FINAL FULL COHERENCE SELF CONTAINED GARDE POUR L INSTANT: 100pc offline, 100pc coherence, sans aucun upload, tourne parfait sur portable avec 120 QDRONES plus gradient procedural base sur hash SHA256 - zero CDN | zero jsDelivr | zero raw | zero 404 | zero base64 geant | 100pc offline self contained | procedural via hash SHA256 deterministe | gradient rgb seed fois 3 fois 7 fois 13 plus 100 particules couleur hsla | diamant coherence | 120 QDRONES quantum coherence | field os 120 qdrones | 10 SAT QDRONE | video stream live 24fps canvas 640x360 procedural via hash | thumbnails couleur rgb base sur hash | 100pc coherence procedural | plus de noir plus de broken | 100pc offline self contained | GO PUR 60 sur 60 | V32 FINAL FULL COHERENCE SELF CONTAINED - PORTABLE PARFAIT - GARDE POUR L INSTANT
+          V32-bis COMPLEMENT EXPLOITABLE: complement inexploitable corrige en exploitable - 3 colonnes 10px coupe -> 1 colonne 14px lisible sur portable + bouton COPIER COMPLEMENT - 100pc offline - 100pc coherence - GO PUR 60 sur 60 - V32-bis COMPLEMENT EXPLOITABLE - PORTABLE PARFAIT
         </div>
       </div>
 
-      <div className="border-2 border-yellow-500 p-3 bg-zinc-900/20 text-[10px] text-zinc-300">
-        <div className="text-yellow-400 text-xs font-bold mb-2">MAG CORE V32 FINAL FULL COHERENCE SELF CONTAINED - GARDE POUR L INSTANT - 100pc OFFLINE 100pc COHERENCE - NO UPLOAD - PORTABLE PARFAIT - VERROUILLE</div>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-          <div>
-            <span className="text-white font-bold">V32 FINAL VERROUILLE:</span><br/>
-            V32 FINAL FULL COHERENCE SELF CONTAINED GARDE POUR L INSTANT - 100pc offline, 100pc coherence, sans aucun upload, et il tourne parfait sur portable avec les 120 QDRONES plus gradient procedural base sur hash SHA256 - Mode bureau - public/visuals/.gitkeep cree dde299e 1 minute ago - mais on garde V32 self contained sans dependance - FORMAT INNOVATIF ADAPTABLE 320px vers 1920px MEME CODE - GRAND ART QUANTIQUE FULL COHERENCE SELF CONTAINED - PORTABLE PARFAIT - VERROUILLE - SHA 537e46c2fd9996a3f04d10fc024198b8094e9b167950cb6b2e9b214600f9b9ea 38 FILES 097bbf6 2026-10-02T15:10:13.901200+00:00
+      <div className="border-2 border-yellow-500 p-4 bg-zinc-900/30">
+        <div className="text-yellow-400 text-lg font-bold mb-4 flex justify-between items-center">
+          <span>MAG CORE V32-bis COMPLEMENT EXPLOITABLE - GARDE POUR L INSTANT - 100pc OFFLINE 100pc COHERENCE - NO UPLOAD - PORTABLE PARFAIT - VERROUILLE - COMPLEMENT EXPLOITABLE</span>
+          <button onClick={copyComplement} className="text-xs px-3 py-1 border border-yellow-400 bg-yellow-900/20">COPIER</button>
+        </div>
+        
+        <div className="grid grid-cols-1 md:grid-cols-1 gap-6 text-sm leading-relaxed">
+          <div className="border-2 border-yellow-800 p-4 bg-black">
+            <div className="text-white font-bold text-base mb-2">V32 FINAL VERROUILLE:</div>
+            <div className="text-zinc-300 text-[14px] leading-6">
+              V32 FINAL FULL COHERENCE SELF CONTAINED GARDE POUR L INSTANT - 100pc offline, 100pc coherence, sans aucun upload, et il tourne parfait sur portable avec les 120 QDRONES plus gradient procedural base sur hash SHA256. Mode bureau - public/visuals/.gitkeep cree dde299e 1 minute ago - mais on garde V32 self contained sans dependance. FORMAT INNOVATIF ADAPTABLE 320px vers 1920px MEME CODE - GRAND ART QUANTIQUE FULL COHERENCE SELF CONTAINED - PORTABLE PARFAIT - VERROUILLE. SHA 537e46c2fd9996a3f04d10fc024198b8094e9b167950cb6b2e9b214600f9b9ea 38 FILES 097bbf6 2026-10-02T15:10:13.901200+00:00 - 38 files - Jean-Christophe Achille - LE FUTUR SE CONSTRUIT DANS L INVISIBLE - QUANTUM RADIO HIT 92 Amin - CONF 99.9pc - SELF CONTAINED 100pc COHERENCE - SEED {seed} - NO UPLOAD - GARDE POUR L INSTANT - GO PUR 60 sur 60 - V32 FINAL VERROUILLE - COMPLEMENT EXPLOITABLE.
+            </div>
           </div>
-          <div>
-            <span className="text-white font-bold">100pc OFFLINE 100pc COHERENCE:</span><br/>
-            Zero CDN externe, zero jsDelivr, zero raw.githubusercontent, zero 404, zero base64 geant qui depasse limite Vercel 5 Mo. 100pc offline self contained procedural via hash SHA256 deterministe meme hash meme visuel - gradient rgb seed fois 3 fois 7 fois 13 plus 100 particules couleur hsla hue seed plus i fois 7 - diamant coherence - texte hash - 120 QDRONES quantum coherence - field os 120 qdrones avec diamant coherence - 10 SAT QDRONE CORE LOCK PRESS MEDIA ATLAS MAP FIELD_OS AUDIO ENG DMX CTRL TV BROAD HASH VER PARTICULE PERF MON coherence - video stream live 24fps canvas 640x360 procedural via hash - thumbnails couleur rgb base sur hash plus nom fichier et hash - 100pc coherence procedural - plus de noir plus de broken plus de gradient fallback - 100pc offline self contained - GO PUR 60 sur 60
+
+          <div className="border-2 border-zinc-700 p-4 bg-black">
+            <div className="text-white font-bold text-base mb-2">100pc OFFLINE 100pc COHERENCE:</div>
+            <div className="text-zinc-300 text-[14px] leading-6">
+              Zero CDN externe, zero jsDelivr, zero raw.githubusercontent, zero 404, zero base64 geant qui depasse limite Vercel 5 Mo. 100pc offline self contained procedural via hash SHA256 deterministe meme hash meme visuel - gradient rgb seed fois 3 fois 7 fois 13 plus 100 particules couleur hsla hue seed plus i fois 7 - diamant coherence - texte hash - 120 QDRONES quantum coherence - field os 120 qdrones avec diamant coherence - 10 SAT QDRONE CORE LOCK PRESS MEDIA ATLAS MAP FIELD_OS AUDIO ENG DMX CTRL TV BROAD HASH VER PARTICULE PERF MON coherence - video stream live 24fps canvas 640x360 procedural via hash - thumbnails couleur rgb base sur hash plus nom fichier et hash - 100pc coherence procedural - plus de noir plus de broken plus de gradient fallback - 100pc offline self contained - GO PUR 60 sur 60 - V32-bis COMPLEMENT EXPLOITABLE - BUILD SAFE GARANTI - Ready Latest 45s - V32 final verrouille c71e283 - 46s Just now - Production Current - mag-core-v07.vercel.app - mag-core-v08 - COMPLEMENT EXPLOITABLE.
+            </div>
           </div>
-          <div>
-            <span className="text-white font-bold">PORTABLE PARFAIT:</span><br/>
-            Tourne parfait sur telephone portable avec les 120 QDRONES plus gradient procedural base sur hash SHA256 - Mode bureau - public/visuals/.gitkeep cree dde299e 1 minute ago - mais on garde V32 self contained sans dependance - sans aucun upload - 100pc offline - 100pc coherence - FORMAT INNOVATIF ADAPTABLE 320px vers 1920px MEME CODE - drones adaptes pour tout structurer en coherence format innovatif et adaptable sur web - GRAND ART QUANTIQUE FULL COHERENCE SELF CONTAINED - PORTABLE PARFAIT - VERROUILLE - GO PUR 60 sur 60 - V32 FINAL FULL COHERENCE SELF CONTAINED GARDE POUR L INSTANT
+
+          <div className="border-2 border-green-800 p-4 bg-black">
+            <div className="text-white font-bold text-base mb-2">PORTABLE PARFAIT - COMPLEMENT EXPLOITABLE:</div>
+            <div className="text-zinc-300 text-[14px] leading-6">
+              Tourne parfait sur telephone portable avec les 120 QDRONES plus gradient procedural base sur hash SHA256 - Mode bureau - public/visuals/.gitkeep cree dde299e 1 minute ago - mais on garde V32 self contained sans dependance - sans aucun upload - 100pc offline - 100pc coherence - FORMAT INNOVATIF ADAPTABLE 320px vers 1920px MEME CODE - drones adaptes pour tout structurer en coherence format innovatif et adaptable sur web - GRAND ART QUANTIQUE FULL COHERENCE SELF CONTAINED - PORTABLE PARFAIT - VERROUILLE - GO PUR 60 sur 60 - V32 FINAL FULL COHERENCE SELF CONTAINED GARDE POUR L INSTANT - COMPLEMENT EXPLOITABLE CORRIGE: complement inexploitable 3 colonnes 10px coupe -> 1 colonne 14px lisible sur portable + bouton COPIER COMPLEMENT - 100pc offline - 100pc coherence - portable parfait - on peut les voir oui - mag-core-v07.vercel.app - mag-core-v08-8tdylt6ms-magcore-labs-projects.vercel.app - Visit - Ready Latest - Deployment Details - 19:30 s-projects.vercel.app - 80 onglets - 0,21 Ko/s 5G 39pc - magcore-lab Hobby - Overview Deployments Logs Analytics Speed Insights Observability Firewall CDN Environment Variables Domains Connect Integrations Storage Flags Agent AI Gateway Sandboxes Workflows Images Usage Support Settings - COMPLEMENT EXPLOITABLE - GARDE POUR L INSTANT.
+            </div>
           </div>
         </div>
       </div>
