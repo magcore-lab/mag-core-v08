@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import "./globals.css";
 
 export const metadata: Metadata = {
   title: "MAG CORE V64 FINAL SANS CASSE - QUANTUM",
