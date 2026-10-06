@@ -1,9 +1,15 @@
-export const metadata={title:"MAG CORE V33 RESTORED ULTRA LIGHT 250 - AUDIO LIVE + DRAG + PLAY",description:"MAG CORE V08 BLACK EDITION FIELD_OS SP01 537e46c2"};
-export default function RootLayout({children}:{children:React.ReactNode}){
-  return(
+import type { Metadata } from "next";
+import "./globals.css";
+
+export const metadata: Metadata = {
+  title: "MAG CORE V64 FINAL SANS CASSE - QUANTUM",
+  description: "MAGCORE SP01 RC1 - 097bbf6 - 537e46c2 - 38 FILES - 37500000 bytes - LE FUTUR SE CONSTRUIT DANS L INVISIBLE - GO PUR 60 SUR 60 VERROUILLE - QUANTIQUE EST LA - EMULATION CORRECTE - V64 FINAL SANS CASSE - BUILD 100PCT OK",
+};
+
+export default function RootLayout({ children }: { children: React.ReactNode }) {
+  return (
     <html lang="fr">
-      <head><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1" /></head>
-      <body style={{margin:0,background:"#000",color:"#fff",fontFamily:"monospace",overflowX:"hidden",touchAction:"none"}}>{children}</body>
+      <body>{children}</body>
     </html>
   );
 }
