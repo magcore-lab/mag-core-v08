@@ -1,5 +1,5 @@
 
-![MAG CORE V19 BLACK EDITION - RETRO-PLEXUS](public/banner-v19-retro-plexus-16x9.png)
+![MAG CORE V19 BLACK EDITION - RETRO-PLEXUS](banner-v19-retro-plexus-16x9.png)
 
 # MAG CORE — THE CORE™ — V19 BLACK EDITION
 ### RETRO-PLEXUS | Built on Core Lock V08 | Final Dezoom -30%
